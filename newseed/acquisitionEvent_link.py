@@ -19,7 +19,8 @@ socket.setdefaulttimeout(60)
 if __name__ == '__main__':
     # 初始链接地址
     initUrl = 'http://newseed.pedaily.cn/invest/r115-p1'
-    fileName_linkIndex_old = 'acquisitionEvent_linkIndex_old.txt'
+    during = 'data/newseed_data'
+    fileNameNew = 'acquisitionEvent_linkIndex_new.txt'
 
     # 获取总记录条数
     totalRecordNum = linkList.getTotalRecordNum(initUrl)
@@ -32,7 +33,7 @@ if __name__ == '__main__':
         # 获取并购事件链接索引列表（最新的）
         eventLinkIndexList = linkList.getEventLinkIndexList(pageLinkList)
         ## 初次爬取，将索引写入旧表（old）
-        handle.listWrite2Txt(eventLinkIndexList ,docPath = 'data/newseed_data',fileName = fileName_linkIndex_old)
+        handle.listAppendWrite2Txt(eventLinkIndexList ,during=during ,fileName = fileNameNew)
         # 读取索引列表（old）
 
         # 找到更新的索引

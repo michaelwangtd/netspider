@@ -2,9 +2,21 @@
 
 import requests
 from bs4 import BeautifulSoup
+import re
 """
     爬取的工具类
 """
+
+def extractContentFromHtmlString(cake):
+    """
+        从html混合文本字符串中提取属于标记语言之间的内容形成列表
+    """
+    if cake:
+        pattern = re.compile('>\s*(.*?)\s*<',re.S)
+        contentList = pattern.findall(cake)
+        return contentList
+
+
 
 def getHooshSoup(url):
     """

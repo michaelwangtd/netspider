@@ -10,14 +10,42 @@ import sys
     工具类
 """
 
-def listWrite2Txt(dataList,fileName,docPath = ''):
+def listReadFromTxt(during ,fileName):
     """
-        将列表内容写入txt文本
+        从txt文本中读取内容形成列表
+    """
+    # 列表数据
+    dataList = []
+    # 根目录
+    rootPath = os.path.dirname(os.path.dirname(__file__))
+    fullFilePath = os.path.join(rootPath,during,fileName)
+    try:
+        fr = open(fullFilePath,'r',encoding='utf-8')
+        i = 1
+        while True:
+            line = fr.readline().strip()
+            if line:
+                dataList.append(line)
+                print(str(i),'/',line)
+                i += 1
+            else:
+                break
+        fr.close()
+    except Exception as err:
+        print('文件读取错误：',err)
+    if dataList:
+        return dataList
+
+
+
+def listAppendWrite2Txt(dataList,fileName,during = ''):
+    """
+        将列表内容追加写入txt文本
     """
     # 获取项目跟目录
     rootPath = os.path.dirname(os.path.dirname(__file__))
     # 组成全路径
-    fullFilePath = os.path.join(rootPath,docPath,fileName)
+    fullFilePath = os.path.join(rootPath,during,fileName)
     # 追加方式写入文本
     fw = open(fullFilePath,'a',encoding='utf-8')
     for item in dataList:

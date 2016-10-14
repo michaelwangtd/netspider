@@ -2,10 +2,60 @@
 
 from util import handle,crawl
 import socket
+import re
+
 socket.setdefaulttimeout(60)
 """
 newseed工具类
 """
+def getTimeTypeAndMoney(soup):
+    '''
+    使用正则表达式来匹配
+    '''
+    # 筛选的标准库
+    timeSet = ['年','月','日']
+    typeSet = ['不详', 'E轮', 'F轮', 'IPO上市及以后', 'D轮', 'A+轮', '其他轮', 'Pre-A', 'C轮', '天使', '种子', '并购', '股权投资', 'B轮', 'A轮']
+    moneySet = ['万日元', '万韩国元', '万新加坡元', '万人民币', '万港币', '万英镑', '万澳大利亚元', '万欧元', '万美元', '万新台币']
+    # 初始化字段
+    investTime = ''
+    investType = ''
+    investMoney = ''
+    if soup.find('div',class_='info'):
+        infoSoup = soup.find('div',class_='info')
+        # 使用正则截取需要的部分
+        if re.search('info">\s*(.*?)\s*<p class="keyword">',str(infoSoup),re.S):
+            cake = re.search('info">\s*(.*?)\s*<p class="keyword">',str(infoSoup),re.S).group(1)
+            contentList = crawl.extractContentFromHtmlString(cake)
+            for content in contentList:
+                # 判断是否为time
+                for time in timeSet:
+                    if time in content:
+                        investTime = content
+                        break
+                # 判断是否为type
+                for type in typeSet:
+                    if type in content:
+                        investType = content
+                        break
+                # 判断是否为money
+                for money in moneySet:
+                    if money in content:
+                        investMoney = content
+                        break
+    return investTime,investType,investMoney
+
+
+def getEventTitle(soup):
+    '''
+    获取事件标题
+    '''
+    investTitle = ''
+    if soup.find('div',class_='title'):
+        titleSoup = soup.find('div',class_='title')
+        if re.search('title">\s*(.*?)\s*<a',str(titleSoup),re.S).group(1):
+            investTitle = re.search('title">\s*(.*?)\s*<a',str(titleSoup),re.S).group(1)
+    return investTitle
+
 
 def getEventLinkIndexList(pageLinkList):
     '''
