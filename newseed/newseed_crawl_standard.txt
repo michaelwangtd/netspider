@@ -1,0 +1,54 @@
+投融资事件信息：
+investTitle investTime investRound investMoney investIntroduce productCompanyName productCompanyLink investCompanyNameList investCompanyLinkList
+
+并购事件信息：
+investTitle investTime investType investMoney productCompanyName productCompanyLink investCompanyName investCompanyLink investIntroduce 
+
+产品公司信息： 
+productCompanyName productCompanyLink productCompanyRegisterName productCompanyCreateTime productCompanyArea productCompanyHomepage productDesc 
+
+投资公司信息：
+investCompanyName investCompanyLink fullInvestCompanyName investCompanyCreateTime investCompanyPlace investCompanyArea investCompanyDesc 
+
+
+append方式写入文件（info_list）：
+invest_relation_event_newseed.xlsx
+acquisition_relation_event_newseed.xlsx
+product_company_info_newseed.xlsx
+invest_company_info_newseed.xlsx
+
+append方式写入文件（url_link）：
+invest_relation_event_linkList_newseed.txt
+acquisition_relation_event_linkList_newseed.txt
+product_company_info_linkList_newseed.txt
+invest_company_info_linkList_newseed.txt
+
+
+
+1 根据初始url链接更新linkList列表，爬取linkList列表中没有的链接对应的数据
+2 将爬取的数据写入到相应的文件中
+
+是否有必要对字段信息做特例穷举
+
+
+newseed.pedaily.cn/invest/r115-p1
+
+获取总记录数	173
+获取页面数列表	[1,2,...,18]
+获取链接地址
+生成链接地址列表
+读取已存在的链接地址文本
+筛选出新增链接地址，形成列表
+1 将列表追加进链接列表中
+2 根据列表抓取新的数据
+
+
+并购：
+http://newseed.pedaily.cn/invest/r115-p1
+
+
+
+
+
+
+                                                                                                                                                                     
