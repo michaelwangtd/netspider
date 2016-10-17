@@ -8,6 +8,25 @@ socket.setdefaulttimeout(60)
 """
 newseed工具类
 """
+
+def getInvestIntroduce(soup):
+    '''
+        获取事件介绍信息
+    '''
+    introduce = ''
+    if soup.find('div',class_='info'):
+        infoSoup = soup.find('div',class_='info')
+        if re.findall('keyword">\s*.*?\s*</p>\s*(.*?)\s*</div>',str(infoSoup),re.S):
+            pTagsStr = re.findall('keyword">\s*.*?\s*</p>\s*(.*?)\s*</div>',str(infoSoup),re.S)[0]
+            # 从html标记中获取内容
+            contentList = crawl.extractContentFromHtmlString(pTagsStr)
+            for item in contentList:
+                introduce = introduce + item
+            return introduce
+
+
+
+
 def getTimeTypeAndMoney(soup):
     '''
     使用正则表达式来匹配

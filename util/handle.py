@@ -3,12 +3,18 @@
 import requests
 import math
 import os
-import sys
+from bs4 import BeautifulSoup
 
 
 """
     工具类
 """
+
+def str2soup(str):
+    if type(str) == str:
+        soup = BeautifulSoup(str)
+        return soup
+
 
 def listReadFromTxt(during ,fileName):
     """
