@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 
 from newseed.util import linkList
-from util import constant,crawl,handle
+from util import constant,crawl,handle,io
 import socket
 import re
 import os
@@ -20,21 +20,21 @@ def getRelatedCompany(soup):
     '''
         获取并购公司信息
     '''
-    productCompanyInfo = []
-    investCompanyInfo = []
+    productCompanyInfoList = []
+    investCompanyInfoList = []
     if soup.find('div',class_='info').find('p',class_='keyword'):
         keywordSoup = soup.find('div',class_='info').find('p',class_='keyword')
         # 产品公司信息
         if re.search('企</span>\s*(.*?)\s*<span class="btn blue">投',str(keywordSoup),re.S):
             productCompanyStr = re.search('企</span>\s*(.*?)\s*<span class="btn blue">投', str(keywordSoup), re.S).group(1)
             content,link = crawl.getStringAndHrefByAtag(productCompanyStr)
-            productCompanyInfo.append((content,link))
+            productCompanyInfoList.append((content,link))
         # 投资公司信息
         if re.search('投</span>\s*(.*?)\s*</p>',str(keywordSoup),re.S):
             investCompanyStr = re.search('投</span>\s*(.*?)\s*</p>',str(keywordSoup),re.S).group(1)
             content,link = crawl.getStringAndHrefByAtag(investCompanyStr)
-            investCompanyInfo.append(content,link)
-    return productCompanyInfo,investCompanyInfo
+            investCompanyInfoList.append((content,link))
+    return productCompanyInfoList,investCompanyInfoList
 
 
 
@@ -62,6 +62,8 @@ if __name__ == '__main__':
     # 2 生成输出文件字段
     outputFilePath = os.path.join(os.path.dirname(os.path.dirname(__file__)),'data','newseed_data','resultSet',outputFileName)
 
+    # 数据记录集合
+    infoList = []
 
     i = 1
     for linkIndex in linkIndexList:
@@ -77,10 +79,8 @@ if __name__ == '__main__':
                 investTime = ''
                 investType = ''
                 investMoney = ''
-                productCompanyName = ''
-                productCompanyLinkIndex = ''
-                investCompanyName = ''
-                investCompanyLinkIndex = ''
+                productCompanyInfoList = ''
+                investCompanyInfoList = ''
                 investIntroduce = ''
                 if hooshSoup.find('div',class_='main').find('div',class_='record invest').find('div',class_='col-md-860'):
                     # 定位到html标记的最小单位
@@ -90,23 +90,30 @@ if __name__ == '__main__':
                     # 获取时间，类型，金额
                     investTime,investType,investMoney = linkList.getTimeTypeAndMoney(soup)
                     # 获取并购相关公司名称，链接（公司信息以列表(name,link)形式返回）
-                    productCompanyInfo,investCompanyInfo = getRelatedCompany(soup)
-                    if productCompanyInfo:
-                        productCompanyName = productCompanyInfo[0]
-                        productCompanyLinkIndex = productCompanyInfo[1]
-                    if investCompanyInfo:
-                        investCompanyName = investCompanyInfo[0]
-                        investCompanyLinkIndex = investCompanyInfo[1]
+                    productCompanyInfoList,investCompanyInfoList = getRelatedCompany(soup)
                     # 获取事件介绍
                     investIntroduce = linkList.getInvestIntroduce(soup)
                 else:
                    print('这条数据信息已丢失...')
-                ## 将字段存入列表
-
+                ## 处理字段，形成列表
+                recordList = linkList.createRecordList(investTitle,investTime,investType,investMoney,productCompanyInfoList,investCompanyInfoList,investIntroduce)
+                if recordList != -1:
+                    # 将处理完的一条记录数据加入列表
+                    infoList.append(recordList)
+                    print(recordList)
             print('已处理第【',str(i),'】条数据...')
             i += 1
         except Exception as err:
-            print(err)
+            print('第【',str(i),'】条记录出现错误：',err)
+            break
+
+    # 将爬取数据写入excel文件
+    if infoList:
+        print('开始将数据集合中数据写入excel文档,infoList中记录数为：',str(len(infoList)))
+        # “覆盖”写入的方式
+        io.writeContent2Excel(infoList,outputFilePath)
+        # “追加”写入的方式
+        # io.appendContent2Excel(infoList,outputFilePath)
 
 
 

@@ -1,22 +1,62 @@
 # -*- coding:utf-8 -*-
 
-from util import constant,handle,crawl
+from util import constant,handle,crawl,io
 from newseed.util import linkList
 import math
 import re
 from bs4 import BeautifulSoup
 from openpyxl import Workbook
 import os
+import time
 
 
-filePath = os.path.join(os.path.dirname(__file__),'test.xls')
-wb = Workbook()
-sheet = wb.active
-sheet.append(['Title','Time','Type','Money','productCompany','productCompanyLink','investCompany','investCompanyLink','investIntroduce'])
-wb.save(filePath)
+# infoList = [('妙品','/invest/444'),('大大','/vc/456')]
+# name,link = linkList.getCompanyNameAndLinkStr(infoList)
+# print(name)
+# print(link)
 
 
 
+
+# infoList = [[1,2,3,4],[1,2,3,4],[1,2,3,4],[1,2,3,4]]
+# infoList2 = [[4,3,2,1],[4,3,2,1],[4,3,2,1],[4,3,2,1]]
+# # outputFilePath = 'D:\\workstation\\repositories\\netspider\\data\\newseed_data\\result\\test.xls'
+# outputFilePath = os.path.join(os.path.dirname(__file__),'data','newseed_data','resultSet','test.xls')
+# # io.writeContent2Excel(infoList,outputFilePath)
+# # io.appendContent2Excel(infoList2,outputFilePath)
+# io.appendContent2Excel_test(infoList,outputFilePath)
+
+
+
+# companyName = 'company'
+# # companyName = companyName[0:len(companyName) - 1]
+# # print(companyName)
+# print(companyName[0:1])
+
+
+
+
+
+# string = """技术的咖啡机啊看<jdskaf>健康收到了就啊大家"""
+# print(string)
+# result = re.sub('<.*?>','',string)
+# print(result)
+
+
+
+
+# newTimeStr = '2016-09-25-15-00'
+# structTime = time.strptime(newTimeStr, '%Y-%m-%d-%H-%M')
+# timeStamp = int(time.mktime(structTime))
+# print(timeStamp)
+
+
+
+# filePath = os.path.join(os.path.dirname(__file__),'test.xls')
+# wb = Workbook()
+# sheet = wb.active
+# sheet.append(['Title','Time','Type','Money','productCompany','productCompanyLink','investCompany','investCompanyLink','investIntroduce'])
+# wb.save(filePath)
 
 
 # testList = ['','']

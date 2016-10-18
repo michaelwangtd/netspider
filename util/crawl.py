@@ -7,6 +7,25 @@ import re
     爬取的工具类
 """
 
+def washTime(investTime):
+    if investTime:
+        temp = investTime.replace('年','.').replace('月','.').replace('日','')
+        return temp
+
+
+
+def washData(string):
+    """
+        1 去除“<>”内容
+        2 去除空格
+    """
+    if string:
+        temp = re.sub('<.*?>','',string)
+        string = temp.replace('\r','').replace('\n','').replace('\t','')
+        return string
+
+
+
 def getStringAndHrefByAtag(string):
     """
         通过正则匹配a标签内的内容和链接

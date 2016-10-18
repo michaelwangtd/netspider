@@ -9,6 +9,50 @@ socket.setdefaulttimeout(60)
 newseed工具类
 """
 
+
+def getCompanyNameAndLinkStr(companyInfoList):
+    '''
+        companyInfoList = [(name,link),(xxx,xxx),(...,...),...]
+        实现类似分类的功能，将名称挑出来形成字符串，同时对应的将链接挑出来形成字符串
+    '''
+    companyName = ''
+    companyLink = ''
+    if companyInfoList:
+        for companyInfo in companyInfoList:
+            companyName = companyName + companyInfo[0] + ','
+            companyLink = companyLink + companyInfo[1] + ','
+        # 处理掉最后的“，”
+        companyName = companyName[0:len(companyName) - 1]
+        companyLink = companyLink[0:len(companyLink) - 1]
+    return companyName,companyLink
+
+
+
+def createRecordList(investTitle,investTime,investType,investMoney,productCompanyInfoList,investCompanyInfoList,investIntroduce):
+    '''
+        1 校验数据，发现不合格的数据，立即返回失败标志 -1
+        2 清洗部分数据
+        3 将字段组成列表
+    '''
+    # 校验数据
+    if handle.verifyTime(investTime) == False:
+        return -1
+    if handle.verifyTpye(investType) == False:
+        return -1
+    if handle.verifyMoney(investMoney) == False:
+        return -1
+    # 清洗数据
+    investTitle = crawl.washData(investTitle)
+    investTime = crawl.washTime(investTime)
+    investIntroduce = crawl.washData(investIntroduce)
+    # 获取公司信息名称，链接字符串
+    productCompanyName,productCompanyLink = getCompanyNameAndLinkStr(productCompanyInfoList)
+    investCompanyName,investCompanyLink = getCompanyNameAndLinkStr(investCompanyInfoList)
+    # 返回recordList
+    return [investTitle,investTime,investType,investMoney,productCompanyName,productCompanyLink,investCompanyName,investCompanyLink,investIntroduce]
+
+
+
 def getInvestIntroduce(soup):
     '''
         获取事件介绍信息

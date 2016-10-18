@@ -10,7 +10,53 @@ from bs4 import BeautifulSoup
     工具类
 """
 
+
+
+
+
+def verifyMoney(investMoney):
+    """
+        校验金额
+    """
+    moneySet = ['万日元', '万韩国元', '万新加坡元', '万人民币', '万港币', '万英镑', '万澳大利亚元', '万欧元', '万美元', '万新台币']
+    if investMoney:
+        for item in moneySet:
+            if item in investMoney:
+                return True
+    return False
+
+
+
+def verifyTpye(investType):
+    """
+        校验类型
+    """
+    typeSet = ['不详', 'E轮', 'F轮', 'IPO上市及以后', 'D轮', 'A+轮', '其他轮', 'Pre-A', 'C轮', '天使', '种子', '并购', '股权投资', 'B轮', 'A轮']
+    if investType:
+        for item in typeSet:
+            if item in investType:
+                return True
+    return False
+
+
+
+def verifyTime(investTime):
+    """
+        校验时间
+    """
+    timeSet = ['年','月','日']
+    if investTime:
+        for item in timeSet:
+            if item in investTime:
+                return True
+    return False
+
+
+
 def str2soup(str):
+    """
+        将字符串转换成Beautiful元素
+    """
     if type(str) == str:
         soup = BeautifulSoup(str)
         return soup
