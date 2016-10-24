@@ -9,7 +9,13 @@ import re
 
 def washTime(investTime):
     if investTime:
-        temp = investTime.replace('年','.').replace('月','.').replace('日','')
+        temp = ''
+        if '年' in investTime and '月' in investTime and '日' in investTime:
+            temp = investTime.replace('年','.').replace('月','.').replace('日','')
+        if '年' in investTime and '月' in investTime and '日' not in investTime:
+            temp = investTime.replace('年','.').replace('月','')
+        if '年' in investTime and '月' not in investTime and '日' not in investTime:
+            temp = investTime.replace('年','')
         return temp
 
 
@@ -23,6 +29,16 @@ def washData(string):
         temp = re.sub('<.*?>','',string)
         string = temp.replace('\r','').replace('\n','').replace('\t','')
         return string
+
+
+def getStringBySpantag(string):
+    """
+        通过正则匹配a标签内的内容和链接
+    """
+    content = ''
+    if re.search('class="default">\s*(.*?)\s*</span>',string,re.S):
+        content = re.search('class="default">\s*(.*?)\s*</span>',string,re.S).group(1)
+    return content
 
 
 
@@ -68,7 +84,7 @@ def getHooshSoup(url):
     """
     try:
         header = { 'User-Agent':'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36' }
-        r = requests.get(url,headers = header)
+        r = requests.get(url,headers = header,timeout = 5)
         r.encoding = 'utf-8'
         html = r.text
         hooshSoup = BeautifulSoup(html).find('body')

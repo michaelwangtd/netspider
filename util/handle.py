@@ -78,7 +78,7 @@ def listReadFromTxt(during ,fileName):
             line = fr.readline().strip()
             if line:
                 dataList.append(line)
-                print(str(i),'/',line)
+                print(str(i),'    ',line)
                 i += 1
             else:
                 break

@@ -10,6 +10,38 @@ import os
 import time
 
 
+html = """<span class="btn blue">投</span>
+<a class="default" href="/vc/35782" target="_blank">光信资本</a>
+<a class="default" href="/vc/24573" target="_blank">源码资本</a>
+<a class="default" href="/vc/31886" target="_blank">洪泰基金</a>
+<a class="default" href="/vc/8572" target="_blank">创新工场</a>
+<a class="default" href="/vc/533" target="_blank">晨兴创投</a>
+<span id="#" class="default">51信用卡</span>
+</p>"""
+
+investCompanyStr = re.search('投</span>\s*(.*?)\s*</p>',html,re.S).group(1)
+# print(investCompanyStr)
+
+investSoup = BeautifulSoup(investCompanyStr)
+resultA = investSoup.find_all('a')
+print(type(resultA))
+# for item in resultA:
+#     print(item)
+#     print(str(item))
+#     print(type(item))
+# print(type(result))
+# print(result)
+
+
+# result = re.findall('target="_blank">\s*(.*?)\s*</a>',investCompanyStr,re.S)
+# relink = re.findall('class="default" href="(.*?)" target="',investCompanyStr,re.S)
+# print(result)
+# print(relink)
+
+
+
+
+
 # infoList = [('妙品','/invest/444'),('大大','/vc/456')]
 # name,link = linkList.getCompanyNameAndLinkStr(infoList)
 # print(name)

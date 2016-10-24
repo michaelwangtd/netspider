@@ -5,14 +5,15 @@ from util import constant,crawl,handle,io
 import socket
 import re
 import os
+from bs4 import BeautifulSoup
 """
 数据源：newseed
-数据分类：并购关系信息
+数据分类：投融资关系信息
 """
 # socket.setdefaulttimeout(60)
 """
-读取acquisitionEvent_linkIndex_new.txt索引到内存形成列表，遍历的抓取这些数据
-将新的列表以追加的方式写入acquisitionEvent_linkIndex_old.txt文件
+读取investEvent_linkIndex_new.txt索引到内存形成列表，遍历的抓取这些数据
+将新的列表以追加的方式写入investEvent_linkIndex_old.txt文件
 """
 
 
@@ -32,8 +33,20 @@ def getRelatedCompany(soup):
         # 投资公司信息
         if re.search('投</span>\s*(.*?)\s*</p>',str(keywordSoup),re.S):
             investCompanyStr = re.search('投</span>\s*(.*?)\s*</p>',str(keywordSoup),re.S).group(1)
-            content,link = crawl.getStringAndHrefByAtag(investCompanyStr)
-            investCompanyInfoList.append((content,link))
+            investCompanySoup = BeautifulSoup(investCompanyStr)
+            # 找出所有a标签
+            resultSetAtag = investCompanySoup.find_all('a')
+            if resultSetAtag:
+                for aTag in resultSetAtag:
+                    content,link = crawl.getStringAndHrefByAtag(str(aTag))
+                    investCompanyInfoList.append((content,link))
+            # 找出所有span标签
+            resultSetSpantag = investCompanySoup.find_all('span')
+            if resultSetSpantag:
+                for spanTag in resultSetSpantag:
+                    content = crawl.getStringBySpantag(str(spanTag))
+                    investCompanyInfoList.append((content,''))
+
     return productCompanyInfoList,investCompanyInfoList
 
 
@@ -47,15 +60,14 @@ if __name__ == '__main__':
     hostName = 'http://newseed.pedaily.cn'
     # 相关路径
     during = 'data/newseed_data'
-    fileNameNew = 'acquisitionEvent_linkIndex_new.txt'
-    fileNameOld = 'acquisitionEvent_linkIndex_old.txt'
+    fileNameNew = 'investEvent_linkIndex_new.txt'
+    fileNameOld = 'investEvent_linkIndex_old.txt'
     # 文件名
-    outputFileName = 'acquisition_event_info.xls'
+    outputFileName = 'invest_event_info.xls'
 
     # 从new.txt文本读取链接索引信息
     # linkIndexList = handle.listReadFromTxt(during ,fileNameNew)
-    linkIndexList = handle.listReadFromTxt(during ,'acquisitionEvent_linkIndex_new.txt')
-
+    linkIndexList = handle.listReadFromTxt(during ,'investEvent_linkIndex_test.txt')
     # 1 将索引信息追加到old.txt文本
     # handle.listAppendWrite2Txt(linkIndexList,fileNameOld,during)
     # 遍历索引,抓取信息

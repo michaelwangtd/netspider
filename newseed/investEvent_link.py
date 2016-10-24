@@ -6,9 +6,9 @@ import socket
 import re
 """
 数据源：newseed
-数据分类：并购关系信息
+数据分类：投融资关系信息
 """
-socket.setdefaulttimeout(60)
+# socket.setdefaulttimeout(60)
 """
 数据更新时要重新运行程序，重写acquisitionEvent_linkIndex_new.txt
 更新策略：
@@ -18,10 +18,10 @@ socket.setdefaulttimeout(60)
 """
 if __name__ == '__main__':
     # 初始链接地址
-    initUrl = 'http://newseed.pedaily.cn/invest/r115-p1'
+    initUrl = 'http://newseed.pedaily.cn/invest/p1'
     during = 'data/newseed_data'
-    fileNameNew = 'acquisitionEvent_linkIndex_new.txt'
-    fileNameOld = 'acquisitionEvent_linkIndex_old.txt'
+    fileNameNew = 'investEvent_linkIndex_new.txt'
+    fileNameOld = 'investEvent_linkIndex_old.txt'
 
     # 获取总记录条数
     totalRecordNum = linkList.getTotalRecordNum(initUrl)
@@ -30,7 +30,7 @@ if __name__ == '__main__':
         # 计算页面链接索引列表
         pageLinkIndexList = handle.getPageLinkIndexList(totalRecordNum)
         # 获取页面链接列表
-        pageLinkList = [re.sub('/r115-p\d+','/r115-p%s' % index,initUrl,re.S) for index in pageLinkIndexList]
+        pageLinkList = [re.sub('/invest/p\d+','/invest/p%s' % index,initUrl,re.S) for index in pageLinkIndexList]
         # 获取并购事件链接索引列表（最新的）
         eventLinkIndexList = linkList.getEventLinkIndexList(pageLinkList)
         ## 初次爬取，将索引写入旧表（old）

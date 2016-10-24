@@ -4,13 +4,13 @@ from util import handle,crawl
 import socket
 import re
 
-socket.setdefaulttimeout(60)
+# socket.setdefaulttimeout(60)
 """
 newseed工具类
 """
 
 
-def getCompanyNameAndLinkStr(companyInfoList):
+def getCompanyNameAndLinkStr(hostName,companyInfoList):
     '''
         companyInfoList = [(name,link),(xxx,xxx),(...,...),...]
         实现类似分类的功能，将名称挑出来形成字符串，同时对应的将链接挑出来形成字符串
@@ -20,7 +20,7 @@ def getCompanyNameAndLinkStr(companyInfoList):
     if companyInfoList:
         for companyInfo in companyInfoList:
             companyName = companyName + companyInfo[0] + ','
-            companyLink = companyLink + companyInfo[1] + ','
+            companyLink = companyLink + hostName + companyInfo[1] + ','
         # 处理掉最后的“，”
         companyName = companyName[0:len(companyName) - 1]
         companyLink = companyLink[0:len(companyLink) - 1]
@@ -28,7 +28,7 @@ def getCompanyNameAndLinkStr(companyInfoList):
 
 
 
-def createRecordList(investTitle,investTime,investType,investMoney,productCompanyInfoList,investCompanyInfoList,investIntroduce):
+def createRecordList(hostName,investTitle,investTime,investType,investMoney,productCompanyInfoList,investCompanyInfoList,investIntroduce):
     '''
         1 校验数据，发现不合格的数据，立即返回失败标志 -1
         2 清洗部分数据
@@ -46,8 +46,8 @@ def createRecordList(investTitle,investTime,investType,investMoney,productCompan
     investTime = crawl.washTime(investTime)
     investIntroduce = crawl.washData(investIntroduce)
     # 获取公司信息名称，链接字符串
-    productCompanyName,productCompanyLink = getCompanyNameAndLinkStr(productCompanyInfoList)
-    investCompanyName,investCompanyLink = getCompanyNameAndLinkStr(investCompanyInfoList)
+    productCompanyName,productCompanyLink = getCompanyNameAndLinkStr(hostName,productCompanyInfoList)
+    investCompanyName,investCompanyLink = getCompanyNameAndLinkStr(hostName,investCompanyInfoList)
     # 返回recordList
     return [investTitle,investTime,investType,investMoney,productCompanyName,productCompanyLink,investCompanyName,investCompanyLink,investIntroduce]
 
@@ -89,6 +89,7 @@ def getTimeTypeAndMoney(soup):
         if re.search('info">\s*(.*?)\s*<p class="keyword">',str(infoSoup),re.S):
             cake = re.search('info">\s*(.*?)\s*<p class="keyword">',str(infoSoup),re.S).group(1)
             contentList = crawl.extractContentFromHtmlString(cake)
+            print(str(contentList))
             for content in contentList:
                 # 判断是否为time
                 for time in timeSet:
