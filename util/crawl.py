@@ -3,6 +3,7 @@
 import requests
 from bs4 import BeautifulSoup
 import re
+import os
 """
     爬取的工具类
 """
@@ -77,10 +78,11 @@ def extractContentFromHtmlString(cake):
 
 
 
-def getHooshSoup(url):
+def getHooshSoup(url,logFileName = ''):
     """
         获取hooshSoup
         根据url链接获取html文本，以BeautifulSoup形式返回
+        logFileName作用是将未抓取到的url写入到指定文件中，日志目录指定在netspider根目录下
     """
     try:
         header = { 'User-Agent':'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36' }
@@ -91,3 +93,9 @@ def getHooshSoup(url):
         return hooshSoup
     except Exception as err:
         print('requests获取html失败：',err)
+        # 将未获取到的url写入文件
+        if logFileName:
+            logFilePath = os.path.join(os.path.dirname(os.path.dirname(__file__)),'log',logFileName)
+            fw = open(logFilePath,'a',encoding='utf-8')
+            fw.writelines(url.strip() + '\n')
+            fw.close()

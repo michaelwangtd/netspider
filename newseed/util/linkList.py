@@ -121,7 +121,7 @@ def getEventTitle(soup):
     return investTitle
 
 
-def getEventLinkIndexList(pageLinkList):
+def getEventLinkIndexList(pageLinkList,logFileName = ''):
     '''
     获取事件链接索引列表
     '''
@@ -130,7 +130,7 @@ def getEventLinkIndexList(pageLinkList):
         i = 1
         for pageLink in pageLinkList:
             if handle.getUrlStatus(pageLink) == 200:
-                hooshSoup = crawl.getHooshSoup(pageLink)
+                hooshSoup = crawl.getHooshSoup(pageLink,logFileName)
                 if hooshSoup:
                     tbodySoup = hooshSoup.find('tbody')
                     for trTag in tbodySoup.find_all('tr'):

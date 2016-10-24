@@ -123,9 +123,9 @@ if __name__ == '__main__':
     if infoList:
         print('开始将数据集合中数据写入excel文档,infoList中记录数为：',str(len(infoList)))
         # “覆盖”写入的方式
-        # io.writeContent2Excel(infoList,outputFilePath)
+        io.writeContent2Excel(infoList,outputFilePath)
         # “追加”写入的方式
-        io.appendContent2Excel(infoList,outputFilePath)
+        # io.appendContent2Excel(infoList,outputFilePath)
 
 
 

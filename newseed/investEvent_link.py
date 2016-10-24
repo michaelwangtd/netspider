@@ -22,6 +22,7 @@ if __name__ == '__main__':
     during = 'data/newseed_data'
     fileNameNew = 'investEvent_linkIndex_new.txt'
     fileNameOld = 'investEvent_linkIndex_old.txt'
+    logFileName = 'log_invest_event_link_newseed.txt'
 
     # 获取总记录条数
     totalRecordNum = linkList.getTotalRecordNum(initUrl)
@@ -32,7 +33,7 @@ if __name__ == '__main__':
         # 获取页面链接列表
         pageLinkList = [re.sub('/invest/p\d+','/invest/p%s' % index,initUrl,re.S) for index in pageLinkIndexList]
         # 获取并购事件链接索引列表（最新的）
-        eventLinkIndexList = linkList.getEventLinkIndexList(pageLinkList)
+        eventLinkIndexList = linkList.getEventLinkIndexList(pageLinkList,logFileName)
         ## 初次爬取，将索引写入旧表（old）
         handle.listAppendWrite2Txt(eventLinkIndexList ,during=during ,fileName = fileNameOld)
         # 读取索引列表（old）
