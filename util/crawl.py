@@ -37,8 +37,8 @@ def getStringBySpantag(string):
         通过正则匹配a标签内的内容和链接
     """
     content = ''
-    if re.search('class="default">\s*(.*?)\s*</span>',string,re.S):
-        content = re.search('class="default">\s*(.*?)\s*</span>',string,re.S).group(1)
+    if re.search('class="default" id="#">\s*(.*?)\s*</span>',string,re.S):
+        content = re.search('class="default" id="#">\s*(.*?)\s*</span>',string,re.S).group(1)
     return content
 
 
@@ -86,7 +86,7 @@ def getHooshSoup(url,logFileName = ''):
     """
     try:
         header = { 'User-Agent':'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36' }
-        r = requests.get(url,headers = header,timeout = 5)
+        r = requests.get(url,headers = header,timeout = 2)
         r.encoding = 'utf-8'
         html = r.text
         hooshSoup = BeautifulSoup(html).find('body')
@@ -98,4 +98,5 @@ def getHooshSoup(url,logFileName = ''):
             logFilePath = os.path.join(os.path.dirname(os.path.dirname(__file__)),'log',logFileName)
             fw = open(logFilePath,'a',encoding='utf-8')
             fw.writelines(url.strip() + '\n')
+            print('【' + str(url) + '】','被记录到日志文件')
             fw.close()

@@ -9,22 +9,62 @@ from openpyxl import Workbook
 import os
 import time
 
+# pageLinkList = ['http://newseed.pedaily.cn/vc/p1','http://newseed.pedaily.cn/vc/p2']
+#
+# result = linkList.getCompanyLinkIndexList(pageLinkList)
+# print(result)
 
-html = """<span class="btn blue">投</span>
-<a class="default" href="/vc/35782" target="_blank">光信资本</a>
-<a class="default" href="/vc/24573" target="_blank">源码资本</a>
-<a class="default" href="/vc/31886" target="_blank">洪泰基金</a>
-<a class="default" href="/vc/8572" target="_blank">创新工场</a>
-<a class="default" href="/vc/533" target="_blank">晨兴创投</a>
-<span id="#" class="default">51信用卡</span>
-</p>"""
 
-investCompanyStr = re.search('投</span>\s*(.*?)\s*</p>',html,re.S).group(1)
-# print(investCompanyStr)
+# # 使用python判断文件是否存在
+# filePath1 = os.path.join(os.path.dirname(__file__),'data','newseed_data','investEvent_linkIndex_test.txt')
+# filePath2 = os.path.join(os.path.dirname(__file__),'data','test.txt')
+# if os.path.exists(filePath1):
+#     print(filePath1,'1存在')
+# if os.path.exists(filePath2):
+#     print(filePath2,'2存在')
 
-investSoup = BeautifulSoup(investCompanyStr)
-resultA = investSoup.find_all('a')
-print(type(resultA))
+
+
+# html = """<p>
+# <p class="keyword">
+# <span class="btn red">企</span>
+# <a class="btn default" href="/company/43614" target="_blank">乐视汽车(LeSEE乐视超级汽车)</a>
+# <span class="btn blue">投</span>
+# <a class="default" href="/vc/36904" target="_blank">深创投</a>
+# <a class="default" href="/vc/31890" target="_blank">联想控股</a>
+# <a class="default" href="/vc/39299" target="_blank">英大资本</a>
+# <span id="#" class="default">民生信托</span>
+# <a class="default" href="/vc/31186" target="_blank">华夏润石（新华联集团）</a>
+# <span id="#" class="default">宏兆基金</span>
+# </p>"""
+# investCompanyStr = re.search('投</span>\s*(.*?)\s*</p>',str(html),re.S).group(1)
+# investCompanySoup = BeautifulSoup(investCompanyStr)
+# resultSetSpantag = investCompanySoup.find_all('span')
+# if resultSetSpantag:
+#     for spanTag in resultSetSpantag:
+#         print(str(spanTag))
+#         content = crawl.getStringBySpantag(str(spanTag))
+#         print(content)
+
+
+
+
+#
+# html = """<span class="btn blue">投</span>
+# <a class="default" href="/vc/35782" target="_blank">光信资本</a>
+# <a class="default" href="/vc/24573" target="_blank">源码资本</a>
+# <a class="default" href="/vc/31886" target="_blank">洪泰基金</a>
+# <a class="default" href="/vc/8572" target="_blank">创新工场</a>
+# <a class="default" href="/vc/533" target="_blank">晨兴创投</a>
+# <span id="#" class="default">51信用卡</span>
+# </p>"""
+#
+# investCompanyStr = re.search('投</span>\s*(.*?)\s*</p>',html,re.S).group(1)
+# # print(investCompanyStr)
+#
+# investSoup = BeautifulSoup(investCompanyStr)
+# resultA = investSoup.find_all('a')
+# print(type(resultA))
 # for item in resultA:
 #     print(item)
 #     print(str(item))

@@ -3,11 +3,102 @@
 from util import handle,crawl
 import socket
 import re
-
+from bs4 import BeautifulSoup
 # socket.setdefaulttimeout(60)
 """
 newseed工具类
 """
+
+
+def getEventInfoList(linkIndexList,logFileName):
+    hostName = 'http://newseed.pedaily.cn'
+    eventInfoList = []
+    if linkIndexList:
+        i = 1
+        for linkIndex in linkIndexList:
+            link = hostName + linkIndex.strip()
+            # statusCode = handle.getUrlStatus(link)
+            # if statusCode == 200:
+            if link:
+                ## 获取对应信息
+                # 获取浓汤soup
+                hooshSoup = crawl.getHooshSoup(link, logFileName)
+                if hooshSoup:
+                    print('获取到hooshSoup')
+                    # 初始化变量信息
+                    investTitle = ''
+                    investTime = ''
+                    investType = ''
+                    investMoney = ''
+                    productCompanyInfoList = ''
+                    investCompanyInfoList = ''
+                    investIntroduce = ''
+                    try:
+                        if hooshSoup.find('div', class_='main').find('div', class_='record invest').find('div',
+                                                                                                         class_='col-md-860'):
+                            # 定位到html标记的最小单位
+                            soup = hooshSoup.find('div', class_='main').find('div', class_='record invest').find('div',
+                                                                                                                 class_='col-md-860')
+                            # 获取事件标题
+                            investTitle = getEventTitle(soup)
+                            # 获取时间，类型，金额
+                            investTime, investType, investMoney = getTimeTypeAndMoney(soup)
+                            # 获取并购相关公司名称，链接（公司信息以列表(name,link)形式返回）
+                            productCompanyInfoList, investCompanyInfoList = getInvestRelatedCompany(soup)
+                            # 获取事件介绍
+                            investIntroduce = getInvestIntroduce(soup)
+                        else:
+                            print('这条数据信息已丢失...')
+                            ## 处理字段，形成列表
+                        recordList = createRecordList(hostName, investTitle, investTime, investType, investMoney,
+                                                          productCompanyInfoList, investCompanyInfoList, investIntroduce)
+                        if recordList != -1:
+                            # 将处理完的一条记录数据加入列表
+                            eventInfoList.append(recordList)
+                            print(recordList)
+                    except Exception as ex:
+                        print(ex)
+            print('已处理第【',str(i),'】条记录')
+            i += 1
+        return eventInfoList
+
+
+def getInvestRelatedCompany(soup):
+    '''
+        获取并购公司信息
+    '''
+    productCompanyInfoList = []
+    investCompanyInfoList = []
+    if soup.find('div',class_='info').find('p',class_='keyword'):
+        keywordSoup = soup.find('div',class_='info').find('p',class_='keyword')
+        # 产品公司信息
+        if re.search('企</span>\s*(.*?)\s*<span class="btn blue">投',str(keywordSoup),re.S):
+            productCompanyStr = re.search('企</span>\s*(.*?)\s*<span class="btn blue">投', str(keywordSoup), re.S).group(1)
+            content,link = crawl.getStringAndHrefByAtag(productCompanyStr)
+            if content:
+                productCompanyInfoList.append((content,link))
+        # 投资公司信息
+        if re.search('投</span>\s*(.*?)\s*</p>',str(keywordSoup),re.S):
+            investCompanyStr = re.search('投</span>\s*(.*?)\s*</p>',str(keywordSoup),re.S).group(1)
+            investCompanySoup = BeautifulSoup(investCompanyStr)
+            # 找出所有a标签
+            resultSetAtag = investCompanySoup.find_all('a')
+            if resultSetAtag:
+                for aTag in resultSetAtag:
+                    content,link = crawl.getStringAndHrefByAtag(str(aTag))
+                    if content:
+                        investCompanyInfoList.append((content,link))
+            # 找出所有span标签
+            resultSetSpantag = investCompanySoup.find_all('span')
+            if resultSetSpantag:
+                for spanTag in resultSetSpantag:
+                    content = crawl.getStringBySpantag(str(spanTag))
+                    if content:
+                        investCompanyInfoList.append((content,'http://newseed.pedaily.cn/'))
+
+    return productCompanyInfoList,investCompanyInfoList
+
+
 
 
 def getCompanyNameAndLinkStr(hostName,companyInfoList):
@@ -89,7 +180,6 @@ def getTimeTypeAndMoney(soup):
         if re.search('info">\s*(.*?)\s*<p class="keyword">',str(infoSoup),re.S):
             cake = re.search('info">\s*(.*?)\s*<p class="keyword">',str(infoSoup),re.S).group(1)
             contentList = crawl.extractContentFromHtmlString(cake)
-            print(str(contentList))
             for content in contentList:
                 # 判断是否为time
                 for time in timeSet:
@@ -119,6 +209,28 @@ def getEventTitle(soup):
         if re.search('title">\s*(.*?)\s*<a',str(titleSoup),re.S).group(1):
             investTitle = re.search('title">\s*(.*?)\s*<a',str(titleSoup),re.S).group(1)
     return investTitle
+
+
+def getCompanyLinkIndexList(pageLinkList,logFileName = ''):
+    '''
+    获取公司链接索引列表
+    '''
+    companyLinkIndexList = []
+    if pageLinkList:
+        i = 1
+        for pageLink in pageLinkList:
+            if handle.getUrlStatus(pageLink) == 200:
+                hooshSoup = crawl.getHooshSoup(pageLink,logFileName)
+                if hooshSoup:
+                    ulSoup = hooshSoup.find('ul',id='newslist')
+                    for trTag in ulSoup.find_all('li'):
+                        linkIndex = trTag.find_all('div',class_='user-pic')[0].a.get('href')
+                        companyLinkIndexList.append(linkIndex)
+                        print('获取索引数目：',str(i),linkIndex)
+                        i += 1
+    print('companyLinkIndexList长度为：',str(len(companyLinkIndexList)))
+    return companyLinkIndexList
+
 
 
 def getEventLinkIndexList(pageLinkList,logFileName = ''):

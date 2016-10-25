@@ -72,3 +72,29 @@ def writeContent2Excel(infoList,outputFilePath):
     print('数据写入完成...')
 
 
+
+def writeOrAppendContent2Excel(infoList,outputFilePath):
+    """
+        判断文件是否存在
+        文件存在就用追加的方式写入信息
+        文件不存在就新写入信息
+    """
+    if os.path.exists(outputFilePath):
+        # “追加”方式写入文件
+        xls_r = xlrd.open_workbook(outputFilePath)
+        sheet_r = xls_r.sheet_by_index(0)
+        rows = sheet_r.nrows
+        xls_w = copy.copy(xls_r)
+        sheet_w = xls_w.get_sheet(0)
+        for i in range(len(infoList)):
+            for j in range(len(infoList[i])):
+                sheet_w.write(rows + i,j,infoList[i][j])
+                print('第【' + str(i) + '】条数据已经写入...')
+    else:
+        xls_w = xlwt.Workbook()
+        sheet_w = xls_w.add_sheet('Sheet1')
+        for i in range(len(infoList)):
+            for j in range(len(infoList[i])):
+                sheet_w.write(i, j, infoList[i][j])
+            print('写入第【', str(i), '】条数据...')
+    xls_w.save(outputFilePath)
