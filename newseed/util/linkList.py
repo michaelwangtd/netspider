@@ -9,6 +9,59 @@ from bs4 import BeautifulSoup
 newseed工具类
 """
 
+def getProductCompanyInfoList(linkIndexList,logFileName):
+    hostName = 'http://newseed.pedaily.cn'
+    productInfoList = []
+    if linkIndexList:
+        i = 1
+        for linkIndex in linkIndexList:
+            link = hostName + linkIndex.strip()
+            # statusCode = handle.getUrlStatus(link)
+            # if statusCode == 200:
+            if link:
+                ## 获取对应信息
+                # 获取浓汤soup
+                hooshSoup = crawl.getHooshSoup(link, logFileName)
+                if hooshSoup:
+                    print('获取到hooshSoup')
+                    # 初始化变量信息
+                    investTitle = ''
+                    investTime = ''
+                    investType = ''
+                    investMoney = ''
+                    productCompanyInfoList = ''
+                    investCompanyInfoList = ''
+                    investIntroduce = ''
+                    try:
+                        if hooshSoup.find('div', class_='main').find('div', class_='record').find('div',
+                                                                                                         class_='col-md-860'):
+                            # 定位到html标记的最小单位
+                            soup = hooshSoup.find('div', class_='main').find('div', class_='record').find('div',
+                                                                                                                 class_='col-md-860')
+                            # 获取事件标题
+                            investTitle = getEventTitle(soup)
+                            # 获取时间，类型，金额
+                            investTime, investType, investMoney = getTimeTypeAndMoney(soup)
+                            # 获取并购相关公司名称，链接（公司信息以列表(name,link)形式返回）
+                            productCompanyInfoList, investCompanyInfoList = getInvestRelatedCompany(soup)
+                            # 获取事件介绍
+                            investIntroduce = getInvestIntroduce(soup)
+                        else:
+                            print('这条数据信息已丢失...')
+                            ## 处理字段，形成列表
+                        recordList = createRecordList(hostName, investTitle, investTime, investType, investMoney,
+                                                          productCompanyInfoList, investCompanyInfoList, investIntroduce)
+                        if recordList != -1:
+                            # 将处理完的一条记录数据加入列表
+                            productInfoList.append(recordList)
+                            print(recordList)
+                    except Exception as ex:
+                        print(ex)
+            print('已处理第【',str(i),'】条记录')
+            i += 1
+        return productInfoList
+
+
 
 def getEventInfoList(linkIndexList,logFileName):
     hostName = 'http://newseed.pedaily.cn'
