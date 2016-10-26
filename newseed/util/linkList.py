@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 
 from util import handle,crawl
+from newseed.util import crawlInfo
 import socket
 import re
 from bs4 import BeautifulSoup
@@ -23,7 +24,7 @@ def getProductCompanyInfoList(linkIndexList,logFileName):
                 # 获取浓汤soup
                 hooshSoup = crawl.getHooshSoup(link, logFileName)
                 if hooshSoup:
-                    print('获取到hooshSoup')
+                    # print('获取到hooshSoup')
                     # 初始化变量信息
                     investTitle = ''
                     investTime = ''
@@ -38,14 +39,15 @@ def getProductCompanyInfoList(linkIndexList,logFileName):
                             # 定位到html标记的最小单位
                             soup = hooshSoup.find('div', class_='main').find('div', class_='record').find('div',
                                                                                                                  class_='col-md-860')
-                            # 获取事件标题
-                            investTitle = getEventTitle(soup)
-                            # 获取时间，类型，金额
-                            investTime, investType, investMoney = getTimeTypeAndMoney(soup)
+                            # 获取公司名称和注册名称
+                            productCompanyName,productCompanyFullName = crawlInfo.getProductCompanyName(soup)
+                            # 获取公司创建时间，地域
+                            createTime,area = crawlInfo.getProductCompanyCreateTimeAndArea(soup)
                             # 获取并购相关公司名称，链接（公司信息以列表(name,link)形式返回）
-                            productCompanyInfoList, investCompanyInfoList = getInvestRelatedCompany(soup)
+                            productCompanyHomepage = crawlInfo.getHomepage(soup)
                             # 获取事件介绍
                             investIntroduce = getInvestIntroduce(soup)
+                            companyIntroduce = getCompanyIntroduce(soup)
                         else:
                             print('这条数据信息已丢失...')
                             ## 处理字段，形成列表
@@ -77,7 +79,7 @@ def getEventInfoList(linkIndexList,logFileName):
                 # 获取浓汤soup
                 hooshSoup = crawl.getHooshSoup(link, logFileName)
                 if hooshSoup:
-                    print('获取到hooshSoup')
+                    # print('获取到hooshSoup')
                     # 初始化变量信息
                     investTitle = ''
                     investTime = ''
@@ -103,6 +105,7 @@ def getEventInfoList(linkIndexList,logFileName):
                         else:
                             print('这条数据信息已丢失...')
                             ## 处理字段，形成列表
+                        # print('到达数据校验这一步了')
                         recordList = createRecordList(hostName, investTitle, investTime, investType, investMoney,
                                                           productCompanyInfoList, investCompanyInfoList, investIntroduce)
                         if recordList != -1:
@@ -147,7 +150,7 @@ def getInvestRelatedCompany(soup):
                 for spanTag in resultSetSpantag:
                     content = crawl.getStringBySpantag(str(spanTag))
                     if content:
-                        investCompanyInfoList.append((content,'http://newseed.pedaily.cn/'))
+                        investCompanyInfoList.append((content,'/'))
 
     return productCompanyInfoList,investCompanyInfoList
 
@@ -179,15 +182,22 @@ def createRecordList(hostName,investTitle,investTime,investType,investMoney,prod
         3 将字段组成列表
     '''
     # 校验数据
-    if handle.verifyTime(investTime) == False:
-        return -1
-    if handle.verifyTpye(investType) == False:
-        return -1
-    if handle.verifyMoney(investMoney) == False:
-        return -1
+    if investTime:
+        if handle.verifyTime(investTime) == False:
+            print('investTime字段不合格:【',str(investTime))
+            return -1
+    if investType:
+        if handle.verifyTpye(investType) == False:
+            print('investType字段不合格:【',str(investType))
+            return -1
+    if investMoney:
+        if handle.verifyMoney(investMoney) == False:
+            print('investMoney字段不合格:【',str(investMoney))
+            return -1
     # 清洗数据
     investTitle = crawl.washData(investTitle)
-    investTime = crawl.washTime(investTime)
+    if investTime:
+        investTime = crawl.washTime(investTime)
     investIntroduce = crawl.washData(investIntroduce)
     # 获取公司信息名称，链接字符串
     productCompanyName,productCompanyLink = getCompanyNameAndLinkStr(hostName,productCompanyInfoList)

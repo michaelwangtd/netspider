@@ -31,21 +31,20 @@ if __name__ == '__main__':
 
     # 获取总记录条数
     totalRecordNum = linkList.getTotalRecordNum(initUrl)
-    # 获取页面链接索引列表
-    if totalRecordNum:
-        # 计算页面链接索引列表
-        pageLinkIndexList = handle.getPageLinkIndexList(totalRecordNum)
-        # 获取页面链接列表
-        pageLinkList = [re.sub('/vc/p\d+','/vc/p%s' % index,initUrl,re.S) for index in pageLinkIndexList]
-        # 获取并购事件链接索引列表（最新的）
-        eventLinkIndexList = linkList.getCompanyLinkIndexList(pageLinkList,logFileName)
-        ## 初次爬取，将索引写入旧表（old）
-        handle.listAppendWrite2Txt(eventLinkIndexList ,during=during ,fileName = fileNameOld)
-        # 读取索引列表（old）
+    # 计算页面链接索引列表
+    pageLinkIndexList = handle.getPageLinkIndexList(totalRecordNum)
+    # 获取页面链接列表
+    pageLinkList = [re.sub('/vc/p\d+','/vc/p%s' % index,initUrl,re.S) for index in pageLinkIndexList]
 
-        # 找到更新的索引
+    # 获取并购事件链接索引列表（最新的）
+    eventLinkIndexList = linkList.getCompanyLinkIndexList(pageLinkList,logFileName)
+    ## 初次爬取，将索引写入旧表（old）
+    handle.listAppendWrite2Txt(eventLinkIndexList ,during=during ,fileName = fileNameOld)
+    # 读取索引列表（old）
 
-        # 更新索引写入新表（new）
+    # 找到更新的索引
+
+    # 更新索引写入新表（new）
 
 
 
@@ -56,6 +55,7 @@ if __name__ == '__main__':
     """
 
     # # 从日志列表读取页面链接
-    # pageLinkList = handle.listReadFromTxt('log','log_invest_event_link_newseed.txt')
-    # eventLinkIndexList = linkList.getEventLinkIndexList(pageLinkList, logFileName)
+    # pageLinkList = handle.listReadFromTxt('log','log_vc_company_link_newseed.txt')
+    # # 这里的logFileName是指定再次写入的日志文件名
+    # eventLinkIndexList = linkList.getCompanyLinkIndexList(pageLinkList, 'log_vc_company_link_newseed1.txt')
     # handle.listAppendWrite2Txt(eventLinkIndexList, during=during, fileName=fileNameOld)

@@ -32,7 +32,7 @@ if __name__ == '__main__':
 
     # 从new.txt文本读取链接索引信息
     # linkIndexList = handle.listReadFromTxt(during ,fileNameNew)
-    linkIndexList = handle.listReadFromTxt(during ,jjadsflja)
+    linkIndexList = handle.listReadFromTxt(during ,fileNameOld)
     print('页面链接数量:',len(linkIndexList))
     # 1 将索引信息追加到old.txt文本
     # handle.listAppendWrite2Txt(linkIndexList,fileNameOld,during)

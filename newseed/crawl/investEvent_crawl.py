@@ -37,10 +37,10 @@ if __name__ == '__main__':
     # 1 将索引信息追加到old.txt文本
     # handle.listAppendWrite2Txt(linkIndexList,fileNameOld,during)
 
-    eventInfoList = linkList.getEventInfoList(linkIndexList,logFileName)
+    eventInfoList = linkList.getEventInfoList(linkIndexList,'log_invest_event_info_newseed_1_1.txt')
 
     # 输出文件目录
-    outputFilePath = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),'data','newseed_data','resultSet',outputFileName)
+    outputFilePath = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),'data','newseed_data','resultSet','invest_event_info_1.xls')
     # 将爬取数据写入excel文件
     if eventInfoList:
         print('开始将数据集合中数据写入excel文档,infoList中记录数为：',str(len(eventInfoList)))
@@ -48,10 +48,6 @@ if __name__ == '__main__':
         # 将信息写入excel文本
         io.writeOrAppendContent2Excel(eventInfoList,outputFilePath)
 
-        # “覆盖”写入的方式
-        # io.writeContent2Excel(eventInfoList,outputFilePath)
-        # “追加”写入的方式
-        # io.appendContent2Excel(eventInfoList,outputFilePath)
 
 
 

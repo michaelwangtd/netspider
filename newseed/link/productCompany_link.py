@@ -30,22 +30,21 @@ if __name__ == '__main__':
     """
     # 获取总记录条数
     totalRecordNum = linkList.getTotalRecordNum(initUrl)
-    # 获取页面链接索引列表
-    if totalRecordNum:
-        # 计算页面链接索引列表
-        pageLinkIndexList = handle.getPageLinkIndexList(totalRecordNum)
-        # 获取页面链接列表
-        pageLinkList = [re.sub('/company/p\d+','/company/p%s' % index,initUrl,re.S) for index in pageLinkIndexList]
-        # 获取并购事件链接索引列表（最新的）
-        eventLinkIndexList = linkList.getCompanyLinkIndexList(pageLinkList,logFileName)
-        ## 初次爬取，将索引写入旧表（old）
-        handle.listAppendWrite2Txt(eventLinkIndexList ,during=during ,fileName = fileNameOld)
-        # 读取索引列表（old）
+    # 计算页面链接索引列表
+    pageLinkIndexList = handle.getPageLinkIndexList(totalRecordNum)
+    # 获取页面链接列表
+    pageLinkList = [re.sub('/company/p\d+','/company/p%s' % index,initUrl,re.S) for index in pageLinkIndexList]
 
-        # 找到更新的索引
+    # 将pageLinkList分成4份，分别写入文件
+    middleNum = int(len(pageLinkList) / 2)
+    earlierNum = int(middleNum / 2)
+    laterNum = int((middleNum + len(pageLinkList)) / 2)
+    pageLinkGroupList = [pageLinkList[:earlierNum],pageLinkList[earlierNum:middleNum],pageLinkList[middleNum:laterNum],pageLinkList[laterNum:]]
 
-        # 更新索引写入新表（new）
-
+    for i in range(len(pageLinkGroupList)):
+        fileName = 'productCompany_linkIndex_old_'
+        during = 'data\\newseed_data'
+        handle.listAppendWrite2Txt(pageLinkGroupList[i],fileName + str(i) + '.txt',during)
 
 
 
@@ -54,7 +53,8 @@ if __name__ == '__main__':
     读取日志文件获取事件链接
     """
 
-    # # 从日志列表读取页面链接
-    # pageLinkList = handle.listReadFromTxt('log','log_invest_event_link_newseed.txt')
-    # eventLinkIndexList = linkList.getEventLinkIndexList(pageLinkList, logFileName)
-    # handle.listAppendWrite2Txt(eventLinkIndexList, during=during, fileName=fileNameOld)
+    # 从日志列表读取页面链接
+    pageLinkList = handle.listReadFromTxt('log', 'log_product_company_link_4_2.txt')
+    eventLinkIndexList = linkList.getCompanyLinkIndexList(pageLinkList, 'log_product_company_link_4_3.txt')
+    handle.listAppendWrite2Txt(eventLinkIndexList, during=during, fileName='productCompany_linkIndex_old_4.txt')
+

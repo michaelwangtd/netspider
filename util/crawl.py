@@ -86,7 +86,7 @@ def getHooshSoup(url,logFileName = ''):
     """
     try:
         header = { 'User-Agent':'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36' }
-        r = requests.get(url,headers = header,timeout = 2)
+        r = requests.get(url,headers = header,timeout = 0.5)
         r.encoding = 'utf-8'
         html = r.text
         hooshSoup = BeautifulSoup(html).find('body')

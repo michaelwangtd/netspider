@@ -9,6 +9,20 @@ from openpyxl import Workbook
 import os
 import time
 
+
+
+
+
+# html = """<p>
+# 2012年10月09日成立
+# <i class="slash">/</i>
+# 北京市
+# </p>"""
+# reList = crawl.extractContentFromHtmlString(html)
+# print(reList)
+
+
+
 # pageLinkList = ['http://newseed.pedaily.cn/vc/p1','http://newseed.pedaily.cn/vc/p2']
 #
 # result = linkList.getCompanyLinkIndexList(pageLinkList)
