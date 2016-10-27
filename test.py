@@ -8,8 +8,36 @@ from bs4 import BeautifulSoup
 from openpyxl import Workbook
 import os
 import time
+import xlrd
 
 
+# testList = []
+# reList = [[1],[2],[3]]
+# # testList.append(reList)     # [[[1], [2], [3]]]
+# testList.extend(reList)
+# print(testList)
+
+
+
+# filePath = os.path.join(os.path.dirname(__file__),'data','newseed_data','resultSet','test.xls')
+# r_xls = xlrd.open_workbook(filePath)
+# r_sheet = r_xls.sheet_by_index(0)
+# rows = r_sheet.nrows
+# # result = r_sheet.row_values(0)
+# # print(type(result))
+# # print(result)
+# for i in range(rows):
+#     print(r_sheet.row_values(i))
+
+
+
+
+
+# testStr = '2010年09月01日成立'
+# testStr2 = '2007年09月成立'
+#
+# result = re.findall('([0-9]+)',testStr2,re.S)
+# print(result)
 
 
 

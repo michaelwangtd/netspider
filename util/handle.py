@@ -10,8 +10,41 @@ from bs4 import BeautifulSoup
     工具类
 """
 
+# def mergeExcelFromFixedDir(fileNameList,newOutputFileName):
+#     '''
+#         由于函数与读写有关，所以函数的位置是固定的，属于handle文件；
+#         同时函数I/O目录也是固定的：netspider/data/newseed_data/resultSet/
+#         函数的作用是合并excel文档
+#         基本思路：第一个文件直接拷贝下来，剩余文件内容读到列表中，将列表中内容追加到第一个文件中，然后重命名
+#     '''
+#     prePath =
+#     if fileNameList:
+#         if len(fileNameList) > 1:
+#             # 将其余excel信息读取到列表
+#             cacheList = []
+#             for i in range(1,len(fileNameList)):
+#                 tempList = getListFromExcel(prePath,fileNameList[i])
+#                 cacheList.extend(tempList)
+#             # 合并第一个excel文档和cacheList中信息
+#             targetFilePath =
+#             appendInfoList2ExcelAsNewFileName(cacheList,targetFilePath,newOutputFileName)
 
 
+
+
+
+
+
+def verifyArea(area):
+    """
+        校验地域
+    """
+    areaSet = ['市','省','香港','澳门','台湾','地区','共和国','国']
+    if area:
+        for item in areaSet:
+            if item in area:
+                return True
+    return False
 
 
 def verifyMoney(investMoney):

@@ -8,6 +8,29 @@ import os
     爬取的工具类
 """
 
+
+def extractTime(timeString):
+    """
+        从时间字符串中提取时间，并组成“yyyy.MM.dd”形式返回
+    """
+    createTime = ''
+    if timeString:
+        if re.findall('([0-9]+)',timeString,re.S):
+            timeList = re.findall('([0-9]+)',timeString,re.S)
+            if timeList:
+                if len(timeList) == 3:
+                    createTime = timeList[0] + '.' + timeList[1] + '.' + timeList[2]
+                elif len(timeList) == 2:
+                    createTime = timeList[0] +'.' + timeList[1]
+                elif len(timeList) == 1:
+                    createTime = timeList[0]
+    return createTime
+
+
+
+
+
+
 def washTime(investTime):
     if investTime:
         temp = ''
@@ -86,7 +109,8 @@ def getHooshSoup(url,logFileName = ''):
     """
     try:
         header = { 'User-Agent':'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36' }
-        r = requests.get(url,headers = header,timeout = 0.5)
+        # r = requests.get(url,headers = header,timeout = 0.5)
+        r = requests.get(url,headers = header,timeout = 1)
         r.encoding = 'utf-8'
         html = r.text
         hooshSoup = BeautifulSoup(html).find('body')

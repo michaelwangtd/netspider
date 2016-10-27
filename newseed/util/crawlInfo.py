@@ -5,6 +5,29 @@ from newseed.util import linkList
 import re
 
 
+def createProductCompanyRecordList(productCompanyName, link, productCompanyFullName, createTime, area,productCompanyHomepage,companyIntroduce):
+    '''
+        1 校验数据，发现不合格的数据，立即返回失败标志 -1
+        2 清洗部分数据
+        3 将字段组成列表
+    '''
+    # 校验数据
+    if createTime:
+        if handle.verifyTime(createTime) == False:
+            print('createTime字段不合格:【', str(createTime))
+            return -1
+    if area:
+        if handle.verifyArea(area) == False:
+            print('area字段不合格:【', str(area))
+            return -1
+    # 清洗数据
+    if createTime:
+        createTime = crawl.extractTime(createTime)
+    companyIntroduce = crawl.washData(companyIntroduce)
+    # 返回recordList
+    return [productCompanyName, link, productCompanyFullName, createTime, area, productCompanyHomepage, companyIntroduce]
+
+
 def getHomepage(soup):
     homePage = ''
     if soup.find('div',class_='info').find('p',class_='link'):
@@ -25,7 +48,7 @@ def getProductCompanyCreateTimeAndArea(soup):
     if soup.find('div',class_='info'):
         infoSoup = soup.find('div',class_='info')
         if re.search('class="info">\s*(.*?)\s*<p class="keyword">',str(infoSoup),re.S):
-            timeAndAreaStr = re.search('class="info">\s*(.*?)\s*<p class="keyword">', str(infoSoup), re.S)
+            timeAndAreaStr = re.search('class="info">\s*(.*?)\s*<p class="keyword">', str(infoSoup), re.S).group(1)
             timeAndAreaList = crawl.extractContentFromHtmlString(timeAndAreaStr)
             # 去掉list中的“/”
             cleanedList = []
