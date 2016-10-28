@@ -10,6 +10,118 @@ from bs4 import BeautifulSoup
 newseed工具类
 """
 
+
+
+def getVcCompanyInfoListFromLog(linkIndexList,logFileName):
+    hostName = 'http://newseed.pedaily.cn'
+    productInfoList = []
+    if linkIndexList:
+        i = 1
+        for linkIndex in linkIndexList:
+            link = linkIndex.strip()
+            # statusCode = handle.getUrlStatus(link)
+            # if statusCode == 200:
+            if link:
+                ## 获取对应信息
+                # 获取浓汤soup
+                hooshSoup = crawl.getHooshSoup(link, logFileName)
+                if hooshSoup:
+                    # print('获取到hooshSoup')
+                    # 初始化变量信息
+                    vcCompanyName = ''
+                    vcCompanyFullName = ''
+                    createTime = ''
+                    vcCompanyPlace = ''
+                    vcCompanyArea = ''
+                    vcCompanyHomepage = ''
+                    vcCompanyIntroduce = ''
+                    try:
+                        if hooshSoup.find('div', class_='main').find('div', class_='record').find('div',
+                                                                                                         class_='col-md-860'):
+                            # 定位到html标记的最小单位
+                            soup = hooshSoup.find('div', class_='main').find('div', class_='record').find('div',
+                                                                                                                 class_='col-md-860')
+                            # 获取公司名称和注册名称
+                            vcCompanyName,vcCompanyFullName = crawlInfo.getVcCompanyName(soup)
+                            # 获取公司创建时间，地域
+                            createTime,vcCompanyPlace,vcCompanyArea = crawlInfo.getVcCompanyCreateTimePlaceAndArea(soup)
+                            # 获取并购相关公司名称，链接（公司信息以列表(name,link)形式返回）
+                            vcCompanyHomepage = crawlInfo.getHomepage(soup)
+                            # 获取事件介绍
+                            vcCompanyIntroduce = getCompanyIntroduce(soup)
+                        else:
+                            print('这条数据信息已丢失...')
+                            ## 处理字段，形成列表
+                        recordList = crawlInfo.createVcCompanyRecordList(vcCompanyName, link, vcCompanyFullName, createTime\
+                                                                         , vcCompanyPlace,vcCompanyArea,vcCompanyHomepage,vcCompanyIntroduce)
+                        if recordList != -1:
+                            # 将处理完的一条记录数据加入列表
+                            productInfoList.append(recordList)
+                            print(recordList)
+                    except Exception as ex:
+                        print(ex)
+            print('已处理第【',str(i),'】条记录')
+            i += 1
+        return productInfoList
+
+
+
+
+def getVcCompanyInfoList(linkIndexList,logFileName):
+    hostName = 'http://newseed.pedaily.cn'
+    productInfoList = []
+    if linkIndexList:
+        i = 1
+        for linkIndex in linkIndexList:
+            link = hostName + linkIndex.strip()
+            # statusCode = handle.getUrlStatus(link)
+            # if statusCode == 200:
+            if link:
+                ## 获取对应信息
+                # 获取浓汤soup
+                hooshSoup = crawl.getHooshSoup(link, logFileName)
+                if hooshSoup:
+                    # print('获取到hooshSoup')
+                    # 初始化变量信息
+                    vcCompanyName = ''
+                    vcCompanyFullName = ''
+                    createTime = ''
+                    vcCompanyPlace = ''
+                    vcCompanyArea = ''
+                    vcCompanyHomepage = ''
+                    vcCompanyIntroduce = ''
+                    try:
+                        if hooshSoup.find('div', class_='main').find('div', class_='record').find('div',
+                                                                                                         class_='col-md-860'):
+                            # 定位到html标记的最小单位
+                            soup = hooshSoup.find('div', class_='main').find('div', class_='record').find('div',
+                                                                                                                 class_='col-md-860')
+                            # 获取公司名称和注册名称
+                            vcCompanyName,vcCompanyFullName = crawlInfo.getVcCompanyName(soup)
+                            # 获取公司创建时间，地域
+                            createTime,vcCompanyPlace,vcCompanyArea = crawlInfo.getVcCompanyCreateTimePlaceAndArea(soup)
+                            # 获取并购相关公司名称，链接（公司信息以列表(name,link)形式返回）
+                            vcCompanyHomepage = crawlInfo.getHomepage(soup)
+                            # 获取事件介绍
+                            vcCompanyIntroduce = getCompanyIntroduce(soup)
+                        else:
+                            print('这条数据信息已丢失...')
+                            ## 处理字段，形成列表
+                        recordList = crawlInfo.createVcCompanyRecordList(vcCompanyName, link, vcCompanyFullName, createTime\
+                                                                         , vcCompanyPlace,vcCompanyArea,vcCompanyHomepage,vcCompanyIntroduce)
+                        if recordList != -1:
+                            # 将处理完的一条记录数据加入列表
+                            productInfoList.append(recordList)
+                            print(recordList)
+                    except Exception as ex:
+                        print(ex)
+            print('已处理第【',str(i),'】条记录')
+            i += 1
+        return productInfoList
+
+
+
+
 def getProductCompanyInfoListFromLog(linkIndexList,logFileName):
     hostName = 'http://newseed.pedaily.cn'
     productInfoList = []
@@ -343,7 +455,7 @@ def getCompanyIntroduce(soup):
             contentList = crawl.extractContentFromHtmlString(pTagsStr)
             for item in contentList:
                 introduce = introduce + item
-            return introduce
+    return introduce
 
 
 

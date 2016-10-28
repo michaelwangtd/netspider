@@ -5,31 +5,17 @@ import xlrd
 import xlwt
 
 
-# depressed !!!
-def appendContent2Excel_test(infoList,outputFilePath):
-    """
-        “追加”的方式写入数据
-        这样处理是有问题的，说是readd的sheet没有write的属性：'Sheet' object has no attribute 'write'
-    """
-    # 打开excel文件
-    xls = xlrd.open_workbook(outputFilePath)
-    # 找到excel文件的sheet表
-    sheet = xls.sheet_by_index(0)
-    # 获取sheet表的行数
-    rows = sheet.nrows
-    # # 将excel文件复制一份
-    # w_xls = copy.copy(r_xls)
-    # # 获取复制后文件的sheet表
-    # sheet_write = w_xls.get_sheet(0)
-
-    # 遍历infoList
-    for i in range(len(infoList)):
-        for j in range(len(infoList[i])):
-            # sheet_write.write(rows + i,j,infoList[i][j])
-            sheet.write(rows + i,j,infoList[i][j])
-        print('第【' + str(i) + '】条数据已经写入...')
-    # 保存文件
-    xls.save(outputFilePath)
+def getListFromExcel(prePath,fileName):
+    tempList = []
+    filePath = os.path.join(prePath,fileName)
+    if os.path.exists(filePath):
+        xls_r = xlrd.open_workbook(filePath)
+        sheet_r = xls_r.sheet_by_index(0)
+        rows = sheet_r.nrows
+        for i in range(rows):
+            oneRecord = sheet_r.row_values(i)
+            tempList.append(oneRecord)
+    return tempList
 
 
 

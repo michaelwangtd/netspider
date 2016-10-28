@@ -8,7 +8,7 @@ import os
 from bs4 import BeautifulSoup
 """
 数据源：newseed
-数据分类：投融资关系信息
+数据分类：产品公司信息
 """
 # socket.setdefaulttimeout(60)
 """
@@ -23,30 +23,31 @@ if __name__ == '__main__':
     hostName = 'http://newseed.pedaily.cn'
     # 相关路径
     during = 'data/newseed_data'
-    fileNameNew = 'investEvent_linkIndex_new.txt'
-    fileNameOld = 'investEvent_linkIndex_old.txt'
+    fileNameNew = 'vcCompany_linkIndex_new.txt'
+    fileNameOld = 'vcCompany_linkIndex_old.txt'
     # 文件名
-    outputFileName = 'invest_event_info.xls'
+    outputFileName = 'vc_company_info.xls'
     # 日志文件
-    logFileName = 'log_invest_event_info_newseed.txt'
+    logFileName = 'log_vc_company_info_newseed.txt'
 
     # 从new.txt文本读取链接索引信息
     # linkIndexList = handle.listReadFromTxt(during ,fileNameNew)
-    linkIndexList = handle.listReadFromTxt(during ,'investEvent_linkIndex_part1_2000.txt')
-    print('具体页面链接数量:',len(linkIndexList))
+    linkIndexList = handle.listReadFromTxt(during ,'vcCompany_linkIndex_old_test.txt')
+    print('页面链接数量:',len(linkIndexList))
     # 1 将索引信息追加到old.txt文本
     # handle.listAppendWrite2Txt(linkIndexList,fileNameOld,during)
 
-    eventInfoList = linkList.getEventInfoList(linkIndexList,logFileName)
+    productCompanyInfoList = linkList.getVcCompanyInfoList(linkIndexList,'log_vc_company_info_newseed.txt')
 
     # 输出文件目录
-    outputFilePath = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),'data','newseed_data','resultSet',outputFileName)
+    outputFilePath = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),'data','newseed_data','resultSet','vc_company_info.xls')
+
     # 将爬取数据写入excel文件
-    if eventInfoList:
-        print('开始将数据集合中数据写入excel文档,infoList中记录数为：',str(len(eventInfoList)))
+    if productCompanyInfoList:
+        print('开始将数据集合中数据写入excel文档,infoList中记录数为：',str(len(productCompanyInfoList)))
 
         # 将信息写入excel文本
-        io.writeOrAppendContent2Excel(eventInfoList,outputFilePath)
+        io.writeOrAppendContent2Excel(productCompanyInfoList,outputFilePath)
 
         # “覆盖”写入的方式
         # io.writeContent2Excel(eventInfoList,outputFilePath)
@@ -54,5 +55,10 @@ if __name__ == '__main__':
         # io.appendContent2Excel(eventInfoList,outputFilePath)
 
 
+
+    # 日志的处理
+    # linkIndexList = handle.listReadFromTxt('log', 'log_vc_company_info_1_2.txt')
+    # productCompanyInfoList = linkList.getVcCompanyInfoListFromLog(linkIndexList, 'log_vc_company_info_1_3.txt')
+    # io.writeOrAppendContent2Excel(productCompanyInfoList, outputFilePath)
 
 

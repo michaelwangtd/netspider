@@ -4,30 +4,28 @@ import requests
 import math
 import os
 from bs4 import BeautifulSoup
+from util import io
+
 
 
 """
     工具类
 """
 
-# def mergeExcelFromFixedDir(fileNameList,newOutputFileName):
-#     '''
-#         由于函数与读写有关，所以函数的位置是固定的，属于handle文件；
-#         同时函数I/O目录也是固定的：netspider/data/newseed_data/resultSet/
-#         函数的作用是合并excel文档
-#         基本思路：第一个文件直接拷贝下来，剩余文件内容读到列表中，将列表中内容追加到第一个文件中，然后重命名
-#     '''
-#     prePath =
-#     if fileNameList:
-#         if len(fileNameList) > 1:
-#             # 将其余excel信息读取到列表
-#             cacheList = []
-#             for i in range(1,len(fileNameList)):
-#                 tempList = getListFromExcel(prePath,fileNameList[i])
-#                 cacheList.extend(tempList)
-#             # 合并第一个excel文档和cacheList中信息
-#             targetFilePath =
-#             appendInfoList2ExcelAsNewFileName(cacheList,targetFilePath,newOutputFileName)
+def mergeExcelFromFixedDirNewseed(fileNameList,newOutputFilePath):
+    '''
+        所有excel内容读取到内存中，重新写入到新文件中
+    '''
+    prePath = os.path.join(os.path.dirname(os.path.dirname(__file__)),'data','newseed_data','resultSet')
+    if fileNameList:
+        # 将所有excel信息读取到列表
+        cacheList = []
+        for i in range(len(fileNameList)):
+            tempList = io.getListFromExcel(prePath,fileNameList[i])
+            cacheList.extend(tempList)
+        # 重新生成一个excel文件
+        io.writeContent2Excel(cacheList,newOutputFilePath)
+
 
 
 
@@ -39,12 +37,25 @@ def verifyArea(area):
     """
         校验地域
     """
-    areaSet = ['市','省','香港','澳门','台湾','地区','共和国','国']
+    areaSet = ['市','省','香港','澳门','台湾','地区','共和国','国','州','巴黎','瑞士','柬埔寨','城','台北','纽约','加拿大']
     if area:
         for item in areaSet:
             if item in area:
                 return True
     return False
+
+
+def verifyPlace(place):
+    """
+        校验地域
+    """
+    areaSet = ['本土','外资','合资','海外']
+    if place:
+        for item in areaSet:
+            if item in place:
+                return True
+    return False
+
 
 
 def verifyMoney(investMoney):
