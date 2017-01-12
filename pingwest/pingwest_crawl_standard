@@ -1,0 +1,27 @@
+ajax接口：http://www.pingwest.com/wp-admin/admin-ajax.php
+param：{'action':'my_recommand','security':'固定的值','postid':'變動的數值','type':'1'}
+
+1 獲取原始數據和ptime
+    1) 原始數據存儲在original_data_yyyymmdd.txt中
+    2）ptime存儲在ptime_flag.txt中
+每次更新數據首先讀取ptime_flag.txt到list，如果新的ptime不在ptime_flag中，則進行更新
+每次更新都重新生成original_data_yyyymmdd.txt文件；
+每次更新將ptime存儲到list中，本次更新完成后以追加方式寫入到ptime_flag.txt中
+2 獲取的數據進行處理，封裝生成json格式，存儲到txt文本中
+
+
+品玩數據獲取規則：
+posturl:文章地址
+content:文章内容
+ptime:作爲下一條數據的ajax參數
+gtime：獲取時間
+cat：種類
+title：標題
+tag：標簽
+
+
+数据更新流程：
+1 遇到更新时，在pingwest具体报道页面找到初始js代码的initposts部分，以此找到最新的ptime
+2 将程序中ptime设置为最新的变量
+3 更新程序将生成相关的两个update文件
+4 ptime的update文件更新后合并到原来ptime文件

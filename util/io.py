@@ -4,6 +4,20 @@ from xlutils import copy
 import xlrd
 import xlwt
 
+def getListFromTxt(filePath):
+    if os.path.exists(filePath):
+        resultList = []
+        fr = open(filePath,'r',encoding='utf-8')
+        while True:
+            line = fr.readline().strip()
+            if line:
+                result = line.strip().replace(',','，')
+                resultList.append(result)
+            else:
+                break
+        fr.close()
+        return resultList
+
 
 def getListFromExcel(prePath,fileName):
     tempList = []
