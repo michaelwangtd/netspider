@@ -15,103 +15,162 @@ import json
 import hashlib
 
 
+url = "http://36kr.com/api/post/5061891/next"
+header = { 'User-Agent':'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36' }
+r = requests.get(url=url,headers=header)
 
-testHtml = """<p><a href="http://thenextweb.com/apple/2013/07/26/apples-developer-center-returns-after-8-day-outage-due-to-security-breach/" target="_blank">1.\xa0苹果开发者中心重新上线</a></p>\n<p>在经历了8天的安全事故后，苹果开发者中心今天终于重新上线。目前开发者中心的主页面已经恢复，但其余的板块仍然处待恢复阶段，如论坛、技术支持和预发布文档等依然没有上线。</p>\n<p>苹果于上周四关闭开发者中心的部分功能，称遭遇外来入侵要进行全面检查。尽管苹果尽最大努力对开发者的账号进行维护，但仍有不少开发者报告称遇到了各种障碍。</p>\n<p><a href="http://www.pingwest.com/pw-7-27-13/apple-devcenter-730x296/" rel="attachment wp-att-19167"><img class="alignnone size-medium wp-image-19167" alt="apple-devcenter-730x296" src="http://cdn.pingwest.com/wp-content/uploads/2013/07/apple-devcenter-730x296-660x267.png?imageView2/2/w/750/q/90" width="660" height="267" /></a></p>\n<p>本周早些时候，苹果发布了一个开发者状态追踪工具，帮助开发者了解目前开发者中心各个板块的恢复情况。苹果称，开发者中心的服务会逐步恢复，先是证书、论坛和Bug报告等，再是软件下载。</p>\n<p><a href="http://thenextweb.com/google/2013/07/26/so-much-for-launch-dates-googles-new-nexus-7-tablet-has-landed-in-the-google-play-store/" target="_blank">2.\xa0新款Nexus 7现已在Play Store开卖</a></p>\n<p>Google刚刚发布的新款Nexus 7平板电脑目前已经在Play Store开卖，从今日起用户可以订购16G和32G两种型号的Nexus 7，售价229美元。据Play Store页面显示，产品订购后要等到7月30日才能出货。早在Nexus 7发布的前一天，BestBuy就提前开放了该设备的预定。</p>\n<p><a href="http://techcrunch.com/2013/07/26/google-asks-glass-developers-to-start-working-on-android-based-apps-ahead-of-glass-development-kit-launch/" target="_blank">3.\xa0Google鼓励开发者先开发Android版的Google Glass应用</a></p>\n<p>目前开发者在Google Glass上开发的应用仅限于一些基于网页的应用，因为API的权限十分有限。要想开发原生的Glass应用必须要等到Google的Glass Development Kit（GDK）发布。而今天Google<a href="https://plus.google.com/u/0/+GoogleDevelopers/posts/d2qgQgL7E2g" target="_blank">发文</a>称，开发者可以先用Android的SDK开发他们设想的Glass应用，这意味着GDK即将到来。</p>\n<p><a href="邮件管理应用Mailbox的开发团队日前宣布，其To-Do类事务管理应用Orchestra即将于9月6日关闭，并将把主要精力放在Mailbox的开发上。去年9月开发团队暂停Orchestra的开发工作转而开发Mailbox。该公司于今年3月份被Dropbox收购。" target="_blank">4.\xa0Mailbox开发团队即将关闭旗下Orchestra产品</a></p>\n<p>邮件管理应用Mailbox的开发团队日前宣布，其To-Do类事务管理应用Orchestra即将于9月6日关闭，并将把主要精力放在Mailbox的开发上。去年9月开发团队暂停Orchestra的开发工作转而开发Mailbox。该公司于今年3月份被Dropbox收购。</p>\n<p><a href="http://www.pcmag.com/article2/0,2817,2422295,00.asp" target="_blank">5.\xa0Google Translate现支持45种语言手写输入</a></p>\n<p>日前Google Translate添加了一项新的功能，手写输入。早在2012年1月，Google Translate的Android版应用就已经支持手写输入了，而此次Google把这一功能放到了网页版上。目前Google Translate支持45种语言的手写输入，包括汉语、日语和韩语。\n<p class="post-footer-wx"><img src="http://cdn.pingwest.com/wp-content/themes/pingwest201603/images/pw-wexin-qr.jpg"><span class="qr-des"><span>微信订阅 <b>PingWest 品玩</b></span><span>请关注公众号：wepingwest ，有品好玩的科技，更早一步看到。</span></span></p>\n<p><a href="http://www.pingwest.com/pw-7-25-2013/chromecast/" rel="attachment wp-att-19050"><img class="alignnone size-full wp-image-19050" alt="chromecast" src="http://cdn.pingwest.com/wp-content/uploads/2013/07/chromecast.png?imageView2/2/w/750/q/90" width="379" height="400" /></a></p>\n
-<p>【1】<a href="http://googleblog.blogspot.com/2013/07/from-tvs-to-tablets-everything-you-love.html">Google发布电视U盘，售价35美元</a></p>\n<p>今天凌晨，Google在旧金山举办的产品发布会上，发布了一款电视U盘产品——Chromecast，售价35美元，折合成人民币215元。</p>\n
-<p>Chromecast外型酷似U盘，可以与电视的HDMI接口相连。连接之后，将允许手机（包括Android、iOS）、平板以及电脑上的内容投射（cast）到电视上，支持的应用包括Netflix、YouTube、 Google Play Movies &amp; TV以及Google Play Music，并且Pandora等应用将在不久时间内支持这一功能。用户可以使用各种智能设备对电视进行操控，同时还可以进行多任务操作——在电视上看视频的同时也可以用手机发邮件。</p>\n<p>在Google看来，发布这款将电视和各种智能设备（手机、平板和电脑）连接起来的设备，是为了向用户提供一个简单的内容提供解决方案，也是Google希望更大程度参与家庭娱乐的举措。</p>\n
-
-<p>【2】<a href="http://allthingsd.com/20130724/facebook-beats-as-mobile-revenue-jumps-to-41-percent-of-ads-business/">Facebook发布第二季度财报</a></p>\n
-<p>今天，Facebook发布了截至6月30日的2013年第二季度财报。</p>\n<p>财报显示，Facebook第二季度营收为18.13亿美元，相较去年同期增长了53%；净利润为3.33亿美元，而去年同期为净亏损1.57亿美元。</p>\n
-<p>从财报来看，Facebook最亮眼的还是移动业务营收。第二季度，Facebook移动端广告营收占据总广告营收的41%，上一季度这一数据还是30%。</p>\n
-<p>【3】<a href="http://googleblog.blogspot.com/2013/07/from-tvs-to-tablets-everything-you-love.html">Google发布新版Nexus 7</a></p>\n
-<p>今天凌晨，Google发布了新版Nexus 7。</p>\n<p>新版Nexus 7采用的323 ppi的7寸屏，屏幕色彩表现相对之前版本提升了30%，配备120万像素的前置摄像头以及500万的后置摄像头，使用1.5GHz高通骁龙S4 PRO处理器，2GB RAM。并且支持超过9个小时的视频播放，10个小时的网页浏览。</p>\n
-<p>全新的Nexus 7将于7月30日上市，16G Wifi版本售价为229美元。</p>\n
-<p>【4】<a href="http://googleblog.blogspot.com/2013/07/from-tvs-to-tablets-everything-you-love.html">Android 4.3发布</a></p>\n
-<p>今天凌晨，Google正式发布了Android 4.3，Nexus 7将是第一款搭载Android 4.3的设备。</p>\n
-<p><a href="http://digi.tech.qq.com/a/20130725/000534.htm">相比Android 4.2, 4.3主要有以下变化：</a></p>\n
-<blockquote><p>1.支持多用户登录<br />\n2.Bluetooth Smart：实现蓝牙低功耗<br />\n3.支持OpenGL ES 3.0：将为Android游戏带来更出色的视觉体验<br />\n
-4.DRM APIs：为一些在线视频软件提供了全新的数字版权加密技术支持</p></blockquote>\n
-<p>【5】<a href="http://9to5google.com/2013/07/24/google-hits-70m-tablet-activations-1m-apps-in-the-play-store/">Android平板达到7000万激活量</a></p>\n<p>在今天的发布会上，Android和Chrome主管Sundar Pichai宣布，Android平板的激活量达到7000万，而去年同期这一数据为1000万。</p>\n
-<p>同时，目前Google Play应用数超过100万，有500亿的App下载量。</p>\n
-<p>&nbsp;</p>\n<p>&nbsp;</p>\n<p>&nbsp;</p>\n<p>&nbsp;\n<p class="post-footer-wx"><img src="http://cdn.pingwest.com/wp-content/themes/pingwest201603/images/pw-wexin-qr.jpg"><span class="qr-des"><span>微信订阅 <b>PingWest 品玩</b></span><span>请关注公众号：wepingwest ，有品好玩的科技，更早一步看到。</span></span></p>\n
-<p><img class="alignnone size-full wp-image-7000" alt="G+d" src="http://cdn.pingwest.com/wp-content/uploads/2013/02/G+d5.jpg?imageView2/2/w/750/q/90" width="490" height="312" /></p>\n
-<p><strong>[1] 巨头决战前夕</strong></p>\n
-<p>上周六晚间，京东商城对外披露<a href="http://www.pingwest.com/360buy-kingdom/" target="_blank">完成7亿美元融资</a>，主要投资者加拿大安大略教师退休基金和沙特亿万富翁阿尔瓦利德王子控股的王国控股集团，都已不是普通的VC，王国控股更是把投资上升到<a href="http://tech.sina.com.cn/i/2013-02-17/11288064747.shtml" target="_blank">“巩固沙特与中国战略关系”</a>的层面。</p>\n
-<p>次日，它的主要竞争对手也都以不同渠道放出风来——<a href="http://tech.163.com/13/0217/09/8NTG48TK000915BD.html" target="_blank">阿里巴巴：投行报告阿里估值达660亿美元至1280亿美元之间</a>，若今年上市，市值可达800亿美元；<a href="http://tech.sina.com.cn/i/2013-02-18/03338065984.shtml" target="_blank">苏宁：张近东内部讲话披露</a>，称电子商务发展要由零售企业主导，并将对组织架构、年度计划、经营策略和人员任命全面进行部署。</p>\n
-
-<p><strong>[2] 唱空3D打印</strong></p>\n<p>过去两年频繁猎杀中国概念股的香橼<a href="http://finance.sina.com.cn/roll/20130218/011814565992.shtml" target="_blank">又瞄准了3D打印公司</a>，上周称“3D打印概念”公司估值过高，技术已被过分炒作。受其影响，3D打印概念股包括3DSystems、Stratasys和ExOne股价全面下跌。</p>\n
-<p>长期来看，市盈率高得离谱的3D打印公司确实需要业绩来支撑资本的信心，而行业生态中也确实需要这样的坏小子角色，提醒人们对过度热门的东西保持适度冷静。至于泡沫问题，我想提醒，奥巴马上周在国情咨文中公布了美国对3D打印的产业部署，中国近期也将公布3D打印的战略性规划和行业提振计划。</p>\n
-
-<p><strong>[3] 搜索引擎国家队</strong></p>\n<p>上周刚刚突破3000万微博粉丝的李开复，昨日疑因发微博质疑即刻搜索而遭禁言3天。</p>\n
-<p>依据相关政策，人民日报和新华社从两年多前开始组建搜索引擎“国家队”，人民日报交出的答案是即刻搜索，并聘请邓亚萍出任总经理。根据<a href="http://tech.sina.com.cn/i/2012-09-26/14277658902_2.shtml">南都周刊的报道</a>，邓亚萍到任后，在李开复的推荐下，邀请了谷歌中国工程院副院长刘骏出任首席科学家来重建技术。</p>\n
-<p>根据<a href="http://tech.sina.com.cn/i/2013-02-17/13488064884.shtml" target="_blank">新浪科技的报道</a>，即刻搜索是在刘骏的创业项目“云云搜索”的基础架构上搭建而成，早在去年第四季度，人民日报副总编辑、人民搜索董事长马利，对目前即刻搜索的现状并不满意。主要矛盾并非是投入过大，而是其未能完全掌握搜索的核心技术。</p>\n
-
-<p><strong>[4] 比特币</strong></p>\n
-<p>比特币诞生4年来，一直保持着不愠不火的状态，最近又连续成为报道主题，多家网站宣布支持比特币。</p>\n
-<p>云存储服务<a href="http://news.pingwest.com/archives/2558">Mega宣布支持比特币</a>，并公布了一系列付费选择。Kim Dotcom一直希望能尽可能不受政府监管，无法追踪的比特币支付是一种非常完美的方案。</p>\n
-<p>此外，热门的社交新闻网站<a href="http://it.sohu.com/20130217/n366269552.shtml">Reddit也宣布</a>接受比特币付款使用Gold服务，该服务提供一系列编辑工具，还可以为用户关闭广告。使用比特币也意味着其可以接受来自全球各地的付款。</p>\n
-<p>去年11月，博客平台Wordpress也宣布接受比特币，将该博客平台的部分付费功能向无法使用信用卡和PayPal支付的部分国家用户开放。</p>\n
-
-<p><strong>[5] Mozilla的使命</strong></p>\n
-<p>上周Opera浏览器宣布转向Chrome和Safari主导的WebKit内核。但<a href="http://news.pingwest.com/archives/2618">Mozilla还是发出了不一样的声音</a>，Mozilla首席技术官Brendan Eich在个人博客上表示，不要期待Firefox更换内核，作为一个非盈利项目，这款浏览器有着与其竞争对手不同的使命。我们不仅是一项业务，还有一个重要原因，就是Mozilla的存在能确保浏览器市场的多元化，因为垄断绝对不利于互联网的发展，这不仅是Mozilla坚守Gecko内核的一个理由，也是对IE浏览器的激励。</p>\n
-<p>我们欢迎多元化而带来的技术进步，反对出现下一个像当年的IE那样因为垄断而固步自封的悲剧。</p>\n
-<p>&nbsp;\n
-<p class="post-footer-wx"><img src="http://cdn.pingwest.com/wp-content/themes/pingwest201603/images/pw-wexin-qr.jpg"><span class="qr-des"><span>微信订阅 <b>PingWest 品玩</b></span><span>请关注公众号：wepingwest ，有品好玩的科技，更早一步看到。</span></span></p>\n """
+dic = json.loads(r.content.decode('utf-8'))
+print(type(dic),dic)
+# i = 1
+# while dic['data']['id']:
+#     url = "http://36kr.com/api/post/" + str(dic['data']['id']) + "/next"
+#     r = requests.get(url=url, headers=header)
+#     dic = json.loads(r.content.decode('utf-8'))
+#     print(i,type(dic), dic)
+#     i += 1
 
 
 
+## 1 获取标签
+# extraction_tags = dic['data']['extraction_tags']
+# print(eval(extraction_tags))
+# print(type(eval(extraction_tags)))
+
+## 2 获取其他相关文章
+# extra = dic['data']['extra']
+# print(type(extra),extra)
+# dic = json.loads(extra)
+# print(type(dic),dic)
 
 
-testHtml2 = """<p><strong>[1] 巨头决战前夕</strong></p>\n
-<p>上周六晚间，京东商城对外披露<a href="http://www.pingwest.com/360buy-kingdom/" target="_blank">完成7亿美元融资</a>，主要投资者加拿大安大略教师退休基金和沙特亿万富翁阿尔瓦利德王子控股的王国控股集团，都已不是普通的VC，王国控股更是把投资上升到<a href="http://tech.sina.com.cn/i/2013-02-17/11288064747.shtml" target="_blank">“巩固沙特与中国战略关系”</a>的层面。</p>\n
-<p>次日，它的主要竞争对手也都以不同渠道放出风来——<a href="http://tech.163.com/13/0217/09/8NTG48TK000915BD.html" target="_blank">阿里巴巴：投行报告阿里估值达660亿美元至1280亿美元之间</a>，若今年上市，市值可达800亿美元；<a href="http://tech.sina.com.cn/i/2013-02-18/03338065984.shtml" target="_blank">苏宁：张近东内部讲话披露</a>，称电子商务发展要由零售企业主导，并将对组织架构、年度计划、经营策略和人员任命全面进行部署。</p>\n
 
-<p><strong>[2] 唱空3D打印</strong></p>\n<p>过去两年频繁猎杀中国概念股的香橼<a href="http://finance.sina.com.cn/roll/20130218/011814565992.shtml" target="_blank">又瞄准了3D打印公司</a>，上周称“3D打印概念”公司估值过高，技术已被过分炒作。受其影响，3D打印概念股包括3DSystems、Stratasys和ExOne股价全面下跌。</p>\n
-<p>长期来看，市盈率高得离谱的3D打印公司确实需要业绩来支撑资本的信心，而行业生态中也确实需要这样的坏小子角色，提醒人们对过度热门的东西保持适度冷静。至于泡沫问题，我想提醒，奥巴马上周在国情咨文中公布了美国对3D打印的产业部署，中国近期也将公布3D打印的战略性规划和行业提振计划。</p>\n
+# for item in extraction_tags:
+#     print(type(item[0]))
+#     print(item[0])
 
-<p><strong>[3] 搜索引擎国家队</strong></p>\n<p>上周刚刚突破3000万微博粉丝的李开复，昨日疑因发微博质疑即刻搜索而遭禁言3天。</p>\n
-<p>依据相关政策，人民日报和新华社从两年多前开始组建搜索引擎“国家队”，人民日报交出的答案是即刻搜索，并聘请邓亚萍出任总经理。根据<a href="http://tech.sina.com.cn/i/2012-09-26/14277658902_2.shtml">南都周刊的报道</a>，邓亚萍到任后，在李开复的推荐下，邀请了谷歌中国工程院副院长刘骏出任首席科学家来重建技术。</p>\n
-<p>根据<a href="http://tech.sina.com.cn/i/2013-02-17/13488064884.shtml" target="_blank">新浪科技的报道</a>，即刻搜索是在刘骏的创业项目“云云搜索”的基础架构上搭建而成，早在去年第四季度，人民日报副总编辑、人民搜索董事长马利，对目前即刻搜索的现状并不满意。主要矛盾并非是投入过大，而是其未能完全掌握搜索的核心技术。</p>\n
+# print(r.content)
+# print(type(json.loads(r.content.decode())))
 
-<p><strong>[4] 比特币</strong></p>\n
-<p>比特币诞生4年来，一直保持着不愠不火的状态，最近又连续成为报道主题，多家网站宣布支持比特币。</p>\n
-<p>云存储服务<a href="http://news.pingwest.com/archives/2558">Mega宣布支持比特币</a>，并公布了一系列付费选择。Kim Dotcom一直希望能尽可能不受政府监管，无法追踪的比特币支付是一种非常完美的方案。</p>\n
-<p>此外，热门的社交新闻网站<a href="http://it.sohu.com/20130217/n366269552.shtml">Reddit也宣布</a>接受比特币付款使用Gold服务，该服务提供一系列编辑工具，还可以为用户关闭广告。使用比特币也意味着其可以接受来自全球各地的付款。</p>\n
-<p>去年11月，博客平台Wordpress也宣布接受比特币，将该博客平台的部分付费功能向无法使用信用卡和PayPal支付的部分国家用户开放。</p>\n
+# r.encoding = 'utf-8'
+# html = r.text
+# print(type(html))
+# print(html)
+# dic = eval(html)
+# print(type(dic))
+# print(dic)
 
-<p><strong>[5] Mozilla的使命</strong></p>\n
-<p>上周Opera浏览器宣布转向Chrome和Safari主导的WebKit内核。但<a href="http://news.pingwest.com/archives/2618">Mozilla还是发出了不一样的声音</a>，Mozilla首席技术官Brendan Eich在个人博客上表示，不要期待Firefox更换内核，作为一个非盈利项目，这款浏览器有着与其竞争对手不同的使命。我们不仅是一项业务，还有一个重要原因，就是Mozilla的存在能确保浏览器市场的多元化，因为垄断绝对不利于互联网的发展，这不仅是Mozilla坚守Gecko内核的一个理由，也是对IE浏览器的激励。</p>\n
-<p>我们欢迎多元化而带来的技术进步，反对出现下一个像当年的IE那样因为垄断而固步自封的悲剧。</p>\n
-<p>&nbsp;\n
-<p class="post-footer-wx"><img src="http://cdn.pingwest.com/wp-content/themes/pingwest201603/images/pw-wexin-qr.jpg"><span class="qr-des"><span>微信订阅 <b>PingWest 品玩</b></span><span>请关注公众号：wepingwest ，有品好玩的科技，更早一步看到。</span></span></p>\n  """
+# html = r.content.decode()
+# print(type(html))
+# print(html)
+# json = json.loads(html)
+# print(json)
 
-resultList = testHtml2.split('\n')
-# print(len(resultList))
-# pattern1 = re.compsile('>[0-9][.):：、,，]',re.S)
-# pattern1 = re.compile('>[0-9][.):：、,，][\u4E00-\u9FA5|a-zA-Z]',re.S)
-# pattern2 = re.compile('>[【|\[][0-9][\]|】]',re.S)
-pattern3 = re.compile('(>[0-9][.):：、,，])|(>[【|\[][0-9][\]|】])',re.S)
-articleList = []
-boatList = []
-finalArticleList = []
-for item in resultList:
-    if pattern3.findall(item):
-        # print(pattern3.findall(item),item)
-        # print(pattern3.findall(item)[0])
-        if boatList:
-            articleList.append(boatList)
-            boatList = []
-        boatList.append(item)
-    else:
-        boatList.append(item)
-# print(len(articleList))
-for item in articleList:
-    print(item)
-    if item[0]:
-        title = getTitle(item[0])
-    contentList = item[1:]
-    content = getContent(''.join(contentList))
-    finalArticleList.append([title,content])
+
+
+# test = [['\"\\u6c7d\\u8f66\"',1],['\"\\u7279\\u65af\\u62c9\"',2],['\"\\u65e0\\u4eba\\u9a7e\\u9a76\"',2]]
+# for item in test:
+#     print(item[0])
+
+
+
+
+
+# testHtml = """<p><a href="http://thenextweb.com/apple/2013/07/26/apples-developer-center-returns-after-8-day-outage-due-to-security-breach/" target="_blank">1.\xa0苹果开发者中心重新上线</a></p>\n<p>在经历了8天的安全事故后，苹果开发者中心今天终于重新上线。目前开发者中心的主页面已经恢复，但其余的板块仍然处待恢复阶段，如论坛、技术支持和预发布文档等依然没有上线。</p>\n<p>苹果于上周四关闭开发者中心的部分功能，称遭遇外来入侵要进行全面检查。尽管苹果尽最大努力对开发者的账号进行维护，但仍有不少开发者报告称遇到了各种障碍。</p>\n<p><a href="http://www.pingwest.com/pw-7-27-13/apple-devcenter-730x296/" rel="attachment wp-att-19167"><img class="alignnone size-medium wp-image-19167" alt="apple-devcenter-730x296" src="http://cdn.pingwest.com/wp-content/uploads/2013/07/apple-devcenter-730x296-660x267.png?imageView2/2/w/750/q/90" width="660" height="267" /></a></p>\n<p>本周早些时候，苹果发布了一个开发者状态追踪工具，帮助开发者了解目前开发者中心各个板块的恢复情况。苹果称，开发者中心的服务会逐步恢复，先是证书、论坛和Bug报告等，再是软件下载。</p>\n<p><a href="http://thenextweb.com/google/2013/07/26/so-much-for-launch-dates-googles-new-nexus-7-tablet-has-landed-in-the-google-play-store/" target="_blank">2.\xa0新款Nexus 7现已在Play Store开卖</a></p>\n<p>Google刚刚发布的新款Nexus 7平板电脑目前已经在Play Store开卖，从今日起用户可以订购16G和32G两种型号的Nexus 7，售价229美元。据Play Store页面显示，产品订购后要等到7月30日才能出货。早在Nexus 7发布的前一天，BestBuy就提前开放了该设备的预定。</p>\n<p><a href="http://techcrunch.com/2013/07/26/google-asks-glass-developers-to-start-working-on-android-based-apps-ahead-of-glass-development-kit-launch/" target="_blank">3.\xa0Google鼓励开发者先开发Android版的Google Glass应用</a></p>\n<p>目前开发者在Google Glass上开发的应用仅限于一些基于网页的应用，因为API的权限十分有限。要想开发原生的Glass应用必须要等到Google的Glass Development Kit（GDK）发布。而今天Google<a href="https://plus.google.com/u/0/+GoogleDevelopers/posts/d2qgQgL7E2g" target="_blank">发文</a>称，开发者可以先用Android的SDK开发他们设想的Glass应用，这意味着GDK即将到来。</p>\n<p><a href="邮件管理应用Mailbox的开发团队日前宣布，其To-Do类事务管理应用Orchestra即将于9月6日关闭，并将把主要精力放在Mailbox的开发上。去年9月开发团队暂停Orchestra的开发工作转而开发Mailbox。该公司于今年3月份被Dropbox收购。" target="_blank">4.\xa0Mailbox开发团队即将关闭旗下Orchestra产品</a></p>\n<p>邮件管理应用Mailbox的开发团队日前宣布，其To-Do类事务管理应用Orchestra即将于9月6日关闭，并将把主要精力放在Mailbox的开发上。去年9月开发团队暂停Orchestra的开发工作转而开发Mailbox。该公司于今年3月份被Dropbox收购。</p>\n<p><a href="http://www.pcmag.com/article2/0,2817,2422295,00.asp" target="_blank">5.\xa0Google Translate现支持45种语言手写输入</a></p>\n<p>日前Google Translate添加了一项新的功能，手写输入。早在2012年1月，Google Translate的Android版应用就已经支持手写输入了，而此次Google把这一功能放到了网页版上。目前Google Translate支持45种语言的手写输入，包括汉语、日语和韩语。\n<p class="post-footer-wx"><img src="http://cdn.pingwest.com/wp-content/themes/pingwest201603/images/pw-wexin-qr.jpg"><span class="qr-des"><span>微信订阅 <b>PingWest 品玩</b></span><span>请关注公众号：wepingwest ，有品好玩的科技，更早一步看到。</span></span></p>\n<p><a href="http://www.pingwest.com/pw-7-25-2013/chromecast/" rel="attachment wp-att-19050"><img class="alignnone size-full wp-image-19050" alt="chromecast" src="http://cdn.pingwest.com/wp-content/uploads/2013/07/chromecast.png?imageView2/2/w/750/q/90" width="379" height="400" /></a></p>\n
+# <p>【1】<a href="http://googleblog.blogspot.com/2013/07/from-tvs-to-tablets-everything-you-love.html">Google发布电视U盘，售价35美元</a></p>\n<p>今天凌晨，Google在旧金山举办的产品发布会上，发布了一款电视U盘产品——Chromecast，售价35美元，折合成人民币215元。</p>\n
+# <p>Chromecast外型酷似U盘，可以与电视的HDMI接口相连。连接之后，将允许手机（包括Android、iOS）、平板以及电脑上的内容投射（cast）到电视上，支持的应用包括Netflix、YouTube、 Google Play Movies &amp; TV以及Google Play Music，并且Pandora等应用将在不久时间内支持这一功能。用户可以使用各种智能设备对电视进行操控，同时还可以进行多任务操作——在电视上看视频的同时也可以用手机发邮件。</p>\n<p>在Google看来，发布这款将电视和各种智能设备（手机、平板和电脑）连接起来的设备，是为了向用户提供一个简单的内容提供解决方案，也是Google希望更大程度参与家庭娱乐的举措。</p>\n
+#
+# <p>【2】<a href="http://allthingsd.com/20130724/facebook-beats-as-mobile-revenue-jumps-to-41-percent-of-ads-business/">Facebook发布第二季度财报</a></p>\n
+# <p>今天，Facebook发布了截至6月30日的2013年第二季度财报。</p>\n<p>财报显示，Facebook第二季度营收为18.13亿美元，相较去年同期增长了53%；净利润为3.33亿美元，而去年同期为净亏损1.57亿美元。</p>\n
+# <p>从财报来看，Facebook最亮眼的还是移动业务营收。第二季度，Facebook移动端广告营收占据总广告营收的41%，上一季度这一数据还是30%。</p>\n
+# <p>【3】<a href="http://googleblog.blogspot.com/2013/07/from-tvs-to-tablets-everything-you-love.html">Google发布新版Nexus 7</a></p>\n
+# <p>今天凌晨，Google发布了新版Nexus 7。</p>\n<p>新版Nexus 7采用的323 ppi的7寸屏，屏幕色彩表现相对之前版本提升了30%，配备120万像素的前置摄像头以及500万的后置摄像头，使用1.5GHz高通骁龙S4 PRO处理器，2GB RAM。并且支持超过9个小时的视频播放，10个小时的网页浏览。</p>\n
+# <p>全新的Nexus 7将于7月30日上市，16G Wifi版本售价为229美元。</p>\n
+# <p>【4】<a href="http://googleblog.blogspot.com/2013/07/from-tvs-to-tablets-everything-you-love.html">Android 4.3发布</a></p>\n
+# <p>今天凌晨，Google正式发布了Android 4.3，Nexus 7将是第一款搭载Android 4.3的设备。</p>\n
+# <p><a href="http://digi.tech.qq.com/a/20130725/000534.htm">相比Android 4.2, 4.3主要有以下变化：</a></p>\n
+# <blockquote><p>1.支持多用户登录<br />\n2.Bluetooth Smart：实现蓝牙低功耗<br />\n3.支持OpenGL ES 3.0：将为Android游戏带来更出色的视觉体验<br />\n
+# 4.DRM APIs：为一些在线视频软件提供了全新的数字版权加密技术支持</p></blockquote>\n
+# <p>【5】<a href="http://9to5google.com/2013/07/24/google-hits-70m-tablet-activations-1m-apps-in-the-play-store/">Android平板达到7000万激活量</a></p>\n<p>在今天的发布会上，Android和Chrome主管Sundar Pichai宣布，Android平板的激活量达到7000万，而去年同期这一数据为1000万。</p>\n
+# <p>同时，目前Google Play应用数超过100万，有500亿的App下载量。</p>\n
+# <p>&nbsp;</p>\n<p>&nbsp;</p>\n<p>&nbsp;</p>\n<p>&nbsp;\n<p class="post-footer-wx"><img src="http://cdn.pingwest.com/wp-content/themes/pingwest201603/images/pw-wexin-qr.jpg"><span class="qr-des"><span>微信订阅 <b>PingWest 品玩</b></span><span>请关注公众号：wepingwest ，有品好玩的科技，更早一步看到。</span></span></p>\n
+# <p><img class="alignnone size-full wp-image-7000" alt="G+d" src="http://cdn.pingwest.com/wp-content/uploads/2013/02/G+d5.jpg?imageView2/2/w/750/q/90" width="490" height="312" /></p>\n
+# <p><strong>[1] 巨头决战前夕</strong></p>\n
+# <p>上周六晚间，京东商城对外披露<a href="http://www.pingwest.com/360buy-kingdom/" target="_blank">完成7亿美元融资</a>，主要投资者加拿大安大略教师退休基金和沙特亿万富翁阿尔瓦利德王子控股的王国控股集团，都已不是普通的VC，王国控股更是把投资上升到<a href="http://tech.sina.com.cn/i/2013-02-17/11288064747.shtml" target="_blank">“巩固沙特与中国战略关系”</a>的层面。</p>\n
+# <p>次日，它的主要竞争对手也都以不同渠道放出风来——<a href="http://tech.163.com/13/0217/09/8NTG48TK000915BD.html" target="_blank">阿里巴巴：投行报告阿里估值达660亿美元至1280亿美元之间</a>，若今年上市，市值可达800亿美元；<a href="http://tech.sina.com.cn/i/2013-02-18/03338065984.shtml" target="_blank">苏宁：张近东内部讲话披露</a>，称电子商务发展要由零售企业主导，并将对组织架构、年度计划、经营策略和人员任命全面进行部署。</p>\n
+#
+# <p><strong>[2] 唱空3D打印</strong></p>\n<p>过去两年频繁猎杀中国概念股的香橼<a href="http://finance.sina.com.cn/roll/20130218/011814565992.shtml" target="_blank">又瞄准了3D打印公司</a>，上周称“3D打印概念”公司估值过高，技术已被过分炒作。受其影响，3D打印概念股包括3DSystems、Stratasys和ExOne股价全面下跌。</p>\n
+# <p>长期来看，市盈率高得离谱的3D打印公司确实需要业绩来支撑资本的信心，而行业生态中也确实需要这样的坏小子角色，提醒人们对过度热门的东西保持适度冷静。至于泡沫问题，我想提醒，奥巴马上周在国情咨文中公布了美国对3D打印的产业部署，中国近期也将公布3D打印的战略性规划和行业提振计划。</p>\n
+#
+# <p><strong>[3] 搜索引擎国家队</strong></p>\n<p>上周刚刚突破3000万微博粉丝的李开复，昨日疑因发微博质疑即刻搜索而遭禁言3天。</p>\n
+# <p>依据相关政策，人民日报和新华社从两年多前开始组建搜索引擎“国家队”，人民日报交出的答案是即刻搜索，并聘请邓亚萍出任总经理。根据<a href="http://tech.sina.com.cn/i/2012-09-26/14277658902_2.shtml">南都周刊的报道</a>，邓亚萍到任后，在李开复的推荐下，邀请了谷歌中国工程院副院长刘骏出任首席科学家来重建技术。</p>\n
+# <p>根据<a href="http://tech.sina.com.cn/i/2013-02-17/13488064884.shtml" target="_blank">新浪科技的报道</a>，即刻搜索是在刘骏的创业项目“云云搜索”的基础架构上搭建而成，早在去年第四季度，人民日报副总编辑、人民搜索董事长马利，对目前即刻搜索的现状并不满意。主要矛盾并非是投入过大，而是其未能完全掌握搜索的核心技术。</p>\n
+#
+# <p><strong>[4] 比特币</strong></p>\n
+# <p>比特币诞生4年来，一直保持着不愠不火的状态，最近又连续成为报道主题，多家网站宣布支持比特币。</p>\n
+# <p>云存储服务<a href="http://news.pingwest.com/archives/2558">Mega宣布支持比特币</a>，并公布了一系列付费选择。Kim Dotcom一直希望能尽可能不受政府监管，无法追踪的比特币支付是一种非常完美的方案。</p>\n
+# <p>此外，热门的社交新闻网站<a href="http://it.sohu.com/20130217/n366269552.shtml">Reddit也宣布</a>接受比特币付款使用Gold服务，该服务提供一系列编辑工具，还可以为用户关闭广告。使用比特币也意味着其可以接受来自全球各地的付款。</p>\n
+# <p>去年11月，博客平台Wordpress也宣布接受比特币，将该博客平台的部分付费功能向无法使用信用卡和PayPal支付的部分国家用户开放。</p>\n
+#
+# <p><strong>[5] Mozilla的使命</strong></p>\n
+# <p>上周Opera浏览器宣布转向Chrome和Safari主导的WebKit内核。但<a href="http://news.pingwest.com/archives/2618">Mozilla还是发出了不一样的声音</a>，Mozilla首席技术官Brendan Eich在个人博客上表示，不要期待Firefox更换内核，作为一个非盈利项目，这款浏览器有着与其竞争对手不同的使命。我们不仅是一项业务，还有一个重要原因，就是Mozilla的存在能确保浏览器市场的多元化，因为垄断绝对不利于互联网的发展，这不仅是Mozilla坚守Gecko内核的一个理由，也是对IE浏览器的激励。</p>\n
+# <p>我们欢迎多元化而带来的技术进步，反对出现下一个像当年的IE那样因为垄断而固步自封的悲剧。</p>\n
+# <p>&nbsp;\n
+# <p class="post-footer-wx"><img src="http://cdn.pingwest.com/wp-content/themes/pingwest201603/images/pw-wexin-qr.jpg"><span class="qr-des"><span>微信订阅 <b>PingWest 品玩</b></span><span>请关注公众号：wepingwest ，有品好玩的科技，更早一步看到。</span></span></p>\n """
+#
+#
+#
+#
+#
+# testHtml2 = """<p><strong>[1] 巨头决战前夕</strong></p>\n
+# <p>上周六晚间，京东商城对外披露<a href="http://www.pingwest.com/360buy-kingdom/" target="_blank">完成7亿美元融资</a>，主要投资者加拿大安大略教师退休基金和沙特亿万富翁阿尔瓦利德王子控股的王国控股集团，都已不是普通的VC，王国控股更是把投资上升到<a href="http://tech.sina.com.cn/i/2013-02-17/11288064747.shtml" target="_blank">“巩固沙特与中国战略关系”</a>的层面。</p>\n
+# <p>次日，它的主要竞争对手也都以不同渠道放出风来——<a href="http://tech.163.com/13/0217/09/8NTG48TK000915BD.html" target="_blank">阿里巴巴：投行报告阿里估值达660亿美元至1280亿美元之间</a>，若今年上市，市值可达800亿美元；<a href="http://tech.sina.com.cn/i/2013-02-18/03338065984.shtml" target="_blank">苏宁：张近东内部讲话披露</a>，称电子商务发展要由零售企业主导，并将对组织架构、年度计划、经营策略和人员任命全面进行部署。</p>\n
+#
+# <p><strong>[2] 唱空3D打印</strong></p>\n<p>过去两年频繁猎杀中国概念股的香橼<a href="http://finance.sina.com.cn/roll/20130218/011814565992.shtml" target="_blank">又瞄准了3D打印公司</a>，上周称“3D打印概念”公司估值过高，技术已被过分炒作。受其影响，3D打印概念股包括3DSystems、Stratasys和ExOne股价全面下跌。</p>\n
+# <p>长期来看，市盈率高得离谱的3D打印公司确实需要业绩来支撑资本的信心，而行业生态中也确实需要这样的坏小子角色，提醒人们对过度热门的东西保持适度冷静。至于泡沫问题，我想提醒，奥巴马上周在国情咨文中公布了美国对3D打印的产业部署，中国近期也将公布3D打印的战略性规划和行业提振计划。</p>\n
+#
+# <p><strong>[3] 搜索引擎国家队</strong></p>\n<p>上周刚刚突破3000万微博粉丝的李开复，昨日疑因发微博质疑即刻搜索而遭禁言3天。</p>\n
+# <p>依据相关政策，人民日报和新华社从两年多前开始组建搜索引擎“国家队”，人民日报交出的答案是即刻搜索，并聘请邓亚萍出任总经理。根据<a href="http://tech.sina.com.cn/i/2012-09-26/14277658902_2.shtml">南都周刊的报道</a>，邓亚萍到任后，在李开复的推荐下，邀请了谷歌中国工程院副院长刘骏出任首席科学家来重建技术。</p>\n
+# <p>根据<a href="http://tech.sina.com.cn/i/2013-02-17/13488064884.shtml" target="_blank">新浪科技的报道</a>，即刻搜索是在刘骏的创业项目“云云搜索”的基础架构上搭建而成，早在去年第四季度，人民日报副总编辑、人民搜索董事长马利，对目前即刻搜索的现状并不满意。主要矛盾并非是投入过大，而是其未能完全掌握搜索的核心技术。</p>\n
+#
+# <p><strong>[4] 比特币</strong></p>\n
+# <p>比特币诞生4年来，一直保持着不愠不火的状态，最近又连续成为报道主题，多家网站宣布支持比特币。</p>\n
+# <p>云存储服务<a href="http://news.pingwest.com/archives/2558">Mega宣布支持比特币</a>，并公布了一系列付费选择。Kim Dotcom一直希望能尽可能不受政府监管，无法追踪的比特币支付是一种非常完美的方案。</p>\n
+# <p>此外，热门的社交新闻网站<a href="http://it.sohu.com/20130217/n366269552.shtml">Reddit也宣布</a>接受比特币付款使用Gold服务，该服务提供一系列编辑工具，还可以为用户关闭广告。使用比特币也意味着其可以接受来自全球各地的付款。</p>\n
+# <p>去年11月，博客平台Wordpress也宣布接受比特币，将该博客平台的部分付费功能向无法使用信用卡和PayPal支付的部分国家用户开放。</p>\n
+#
+# <p><strong>[5] Mozilla的使命</strong></p>\n
+# <p>上周Opera浏览器宣布转向Chrome和Safari主导的WebKit内核。但<a href="http://news.pingwest.com/archives/2618">Mozilla还是发出了不一样的声音</a>，Mozilla首席技术官Brendan Eich在个人博客上表示，不要期待Firefox更换内核，作为一个非盈利项目，这款浏览器有着与其竞争对手不同的使命。我们不仅是一项业务，还有一个重要原因，就是Mozilla的存在能确保浏览器市场的多元化，因为垄断绝对不利于互联网的发展，这不仅是Mozilla坚守Gecko内核的一个理由，也是对IE浏览器的激励。</p>\n
+# <p>我们欢迎多元化而带来的技术进步，反对出现下一个像当年的IE那样因为垄断而固步自封的悲剧。</p>\n
+# <p>&nbsp;\n
+# <p class="post-footer-wx"><img src="http://cdn.pingwest.com/wp-content/themes/pingwest201603/images/pw-wexin-qr.jpg"><span class="qr-des"><span>微信订阅 <b>PingWest 品玩</b></span><span>请关注公众号：wepingwest ，有品好玩的科技，更早一步看到。</span></span></p>\n  """
+#
+# resultList = testHtml2.split('\n')
+# # print(len(resultList))
+# # pattern1 = re.compsile('>[0-9][.):：、,，]',re.S)
+# # pattern1 = re.compile('>[0-9][.):：、,，][\u4E00-\u9FA5|a-zA-Z]',re.S)
+# # pattern2 = re.compile('>[【|\[][0-9][\]|】]',re.S)
+# pattern3 = re.compile('(>[0-9][.):：、,，])|(>[【|\[][0-9][\]|】])',re.S)
+# articleList = []
+# boatList = []
+# finalArticleList = []
+# for item in resultList:
+#     if pattern3.findall(item):
+#         # print(pattern3.findall(item),item)
+#         # print(pattern3.findall(item)[0])
+#         if boatList:
+#             articleList.append(boatList)
+#             boatList = []
+#         boatList.append(item)
+#     else:
+#         boatList.append(item)
+# # print(len(articleList))
+# for item in articleList:
+#     print(item)
+#     if item[0]:
+#         title = getTitle(item[0])
+#     contentList = item[1:]
+#     content = getContent(''.join(contentList))
+#     finalArticleList.append([title,content])
 
 
 
