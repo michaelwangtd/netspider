@@ -11,7 +11,7 @@ def getListFromTxt(filePath):
         while True:
             line = fr.readline().strip()
             if line:
-                result = line.strip().replace(',','，')
+                result = line.strip()
                 resultList.append(result)
             else:
                 break

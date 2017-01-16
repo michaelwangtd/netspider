@@ -15,11 +15,12 @@ import json
 import hashlib
 
 
-url = "http://36kr.com/api/post/5061891/next"
+url = "http://36kr.com/api/post/5059724/next"
 header = { 'User-Agent':'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36' }
 r = requests.get(url=url,headers=header)
-
-dic = json.loads(r.content.decode('utf-8'))
+html = r.content.decode('utf-8')
+print(html)
+dic = json.loads(html)
 print(type(dic),dic)
 # i = 1
 # while dic['data']['id']:
