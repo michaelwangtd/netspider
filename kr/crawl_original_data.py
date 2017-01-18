@@ -23,7 +23,7 @@ def getRecordStartNum(filePath):
 
 if __name__ == '__main__':
     # 初始请求号
-    startNum = 5056956
+    startNum = 5062069
 
     # 初始url
     url = "http://36kr.com/api/post/" + str(startNum) + "/next"
@@ -34,9 +34,10 @@ if __name__ == '__main__':
     html = r.content.decode('utf-8')
     dic = json.loads(html)
 
-    # 文件路径
+    # 文件输出路径
     startNumFilePath = index.ROOT_PATH + '/data/kr_data' + '/start_num_record.txt'
     originHtmlFilePath = index.ROOT_PATH + '/data/kr_data' + '/origin_html.txt'
+    # originHtmlFilePath = index.ROOT_PATH + '/data/kr_data' + '/origin_html_up_1.txt'
 
     # 获取start_num_record.txt中的历史纪录序号
     recordNumList = getRecordStartNum(startNumFilePath)
@@ -51,7 +52,7 @@ if __name__ == '__main__':
     i = 1
     try:
         while dic['data']['id']:
-            if dic['data']['id'] not in recordNumList:
+            if str(dic['data']['id']) not in recordNumList:
                 startNum = dic['data']['id']
                 # 更新请求地址
                 url = "http://36kr.com/api/post/" + str(startNum) + "/next"
@@ -61,8 +62,12 @@ if __name__ == '__main__':
                 dic = json.loads(html)
                 fw_startNum.write(str(startNum) + '\n')
                 fw_originHtml.write(html + '\n')
-                print(i,startNum)
+                print(i,'已写入文件的序号：',startNum)
+                if dic['data']['id']:
+                    print(i,'获取的最新的序号：',dic['data']['id'])
                 i += 1
+            else:
+                break
     except Exception as ex:
         fw_startNum.close()
         fw_originHtml.close()

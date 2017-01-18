@@ -1,10 +1,15 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
+
 import index
 import requests
 import json
 from util import io,handle,crawl,constant
+import os
 
+"""
+    通过接口直接获取json数据
+"""
 
 def recursivelyWrite(url,data,fw_origin,fw_ptime,count,ptimeList):
     '''
@@ -38,30 +43,73 @@ def recursivelyWrite(url,data,fw_origin,fw_ptime,count,ptimeList):
         fw_ptime.close()
 
 
+def getRecordPostId(filePath):
+    recordNumList = []
+    if os.path.exists(filePath):
+        recordNumList = io.getListFromTxt(filePath)
+    return recordNumList
 
-"""
-    直接调用ajax接口
-"""
+
 if __name__ == '__main__':
-    # 设定初始变量
-    # 设定的这个postid一定要保证是最新的
-    # postid = '1481627840'
-    postid = '1347883547'
-    originOutputFilePath = index.rootPath + '/data/pingwest_data/' + 'origin_content_1213.txt'
-    ptimeOutputFilePath = index.rootPath + '/data/pingwest_data/' + 'origin_ptime_1213.txt'
-    ptimeOriginFilePath = index.rootPath + '/data/pingwest_data/' + 'origin_ptime.txt'
+    # 每次更新时只需设定ptime为最新
+    ptime = 1347883547
+
+    originHtmlOutputFilePath = index.ROOT_PATH + '/data/pingwest_data/' + 'origin_html_pingwest_201701181122.txt'
+    ptimeFlagOutputFilePath = index.ROOT_PATH + '/data/pingwest_data/' + 'ptime_flag_record_pingwest.txt'
 
     url = 'http://www.pingwest.com/wp-admin/admin-ajax.php'
     data = {'action': 'my_recommand', 'secutity': 'b17e1ad3ea', 'postid': '', 'type': '1'}
-    data['postid'] = postid
+    data['postid'] = ptime
+
+    r = requests.post(url=url, data=data)
+    html = r.content.decode('utf-8')
+    dicList = json.loads(html)
 
     # 获取ptimeList
-    ptimeList = io.getListFromTxt(ptimeOriginFilePath)
-    print(len(ptimeList),ptimeList)
-    # I/O操作
-    fw_origin = open(originOutputFilePath,'a')
-    fw_ptime = open(ptimeOutputFilePath,'a',encoding='utf-8')
-    # 使用回掉函数，在函数内部完成持久化操作
-    recursivelyWrite(url,data,fw_origin,fw_ptime,0,ptimeList)
+    ptimeList = getRecordPostId(ptimeFlagOutputFilePath)
+
+    # 建立文件流
+    fw_ptime = open(ptimeFlagOutputFilePath,'a',encoding='utf-8')
+    fw_originHtml = open(originHtmlOutputFilePath,'a',encoding='utf-8')
+    # 写入初始数据
+    fw_ptime.write(str(ptime) + '\n')
+    fw_originHtml.write(html + '\n')
+
+    i = 1
+    try:
+        while dicList[0]['ptime']:
+            if str(dicList[0]['ptime']) not in ptimeList:
+                ptime = dicList[0]['ptime']
+                # 更新ptime
+                data['postid'] = ptime
+                r = requests.post(url=url, data=data)
+                # 原始html数据
+                html = r.content.decode('utf-8')
+                dicList = json.loads(html)
+                fw_ptime.write(str(ptime) + '\n')
+                fw_originHtml.write(html + '\n')
+                print(i, '已写入文件的序号：', ptime)
+                if dicList[0]['ptime']:
+                    print(i, '获取的最新的序号：', dicList[0]['ptime'])
+                i += 1
+            else:
+                break
+    except Exception as ex:
+        fw_ptime.close()
+        fw_originHtml.close()
+    # 关闭文件
     fw_ptime.close()
-    fw_origin.close()
+    fw_originHtml.close()
+
+
+
+
+    # ptimeList = io.getListFromTxt(ptimeOriginFilePath)
+    # print(len(ptimeList),ptimeList)
+    # # I/O操作
+    # fw_origin = open(originOutputFilePath,'a')
+    # fw_ptime = open(ptimeOutputFilePath,'a',encoding='utf-8')
+    # # 使用回掉函数，在函数内部完成持久化操作
+    # recursivelyWrite(url,data,fw_origin,fw_ptime,0,ptimeList)
+    # fw_ptime.close()
+    # fw_origin.close()

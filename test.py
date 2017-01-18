@@ -13,15 +13,46 @@ import requests
 import chardet
 import json
 import hashlib
+import index
 
 
-url = "http://36kr.com/api/post/5059724/next"
-header = { 'User-Agent':'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36' }
-r = requests.get(url=url,headers=header)
-html = r.content.decode('utf-8')
-print(html)
-dic = json.loads(html)
+filePath = index.ROOT_PATH + '/data/pingwest_data/' + 'origin_html_pingwest_201701181122.txt'
+fr = open(filePath,'r',encoding='utf-8')
+line = fr.readline()
+print(type(line),line)
+
+dic = json.loads(line)
 print(type(dic),dic)
+print(type(dic[0]),dic[0])
+print(dic[0]['ptime'])
+
+
+
+
+
+# postid = '1484687722'
+# url = 'http://www.pingwest.com/wp-admin/admin-ajax.php'
+# data = {'action': 'my_recommand', 'secutity': 'b17e1ad3ea', 'postid': '', 'type': '1'}
+# data['postid'] = postid
+#
+# r = requests.post(url=url, data=data)
+# html = r.content.decode('utf-8')
+# print(type(html),html)
+# dic = json.loads(html)
+# print(type(dic),dic)
+
+
+
+
+
+## 36kr爬取的单元测试
+# url = "http://36kr.com/api/post/5059724/next"
+# header = { 'User-Agent':'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36' }
+# r = requests.get(url=url,headers=header)
+# html = r.content.decode('utf-8')
+# print(html)
+# dic = json.loads(html)
+# print(type(dic),dic)
 # i = 1
 # while dic['data']['id']:
 #     url = "http://36kr.com/api/post/" + str(dic['data']['id']) + "/next"
