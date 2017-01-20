@@ -23,7 +23,7 @@ def getRecordPageNum(filePath):
 
 if __name__ == '__main__':
     # 初始请求号
-    startNum = 5062333
+    startNum = 5052317
 
     # 请求常量参数
     header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36'}
@@ -60,8 +60,6 @@ if __name__ == '__main__':
                 fw_pageNum.write(str(currentPageNum) + '\n')
                 print(i,currentPageNum)
                 i += 1
-                if i == 5:
-                    break
                 # 三 更新参数
                 startNum = dic['data']['id']
                 # 初始url

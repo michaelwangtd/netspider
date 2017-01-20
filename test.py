@@ -18,6 +18,26 @@ import index
 
 
 
+# 测试读取36kr爬取内容
+filePath = index.ROOT_PATH + '/data/kr_data/' + 'origin_html.txt'
+fr = open(filePath,'r',encoding='utf-8')
+line = fr.readline()
+print(type(line),line)
+dic = json.loads(line)
+print(type(dic),dic)
+print(dic['data']['title'])
+print(dic['data']['published_at'])
+print(dic['data']['currentUrl'])
+print(type(dic['data']['extraction_tags']),dic['data']['extraction_tags'])
+originTag = json.loads(dic['data']['extraction_tags'])
+print(type(originTag),originTag,originTag[0],originTag[1][0])
+print(dic['data']['user']['name'])
+print(type(dic['data']['content']),dic['data']['content'])
+
+
+
+
+
 # filePath = index.ROOT_PATH + '/data/pingwest_data/' + 'origin_html_pingwest_201701181122.txt'
 # fr = open(filePath,'r',encoding='utf-8')
 # line = fr.readline()
@@ -47,14 +67,14 @@ import index
 
 
 
-## 36kr爬取的单元测试
-url = "http://36kr.com/api/post/5059724/next"
-header = { 'User-Agent':'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36' }
-r = requests.get(url=url,headers=header)
-html = r.content.decode('utf-8')
-# print(html)
-dic = json.loads(html)
-print(type(dic),dic)
+# ## 36kr爬取的单元测试
+# url = "http://36kr.com/api/post/5059724/next"
+# header = { 'User-Agent':'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36' }
+# r = requests.get(url=url,headers=header)
+# html = r.content.decode('utf-8')
+# # print(html)
+# dic = json.loads(html)
+# print(type(dic),dic)
 # i = 1
 # while dic['data']['id']:
 #     url = "http://36kr.com/api/post/" + str(dic['data']['id']) + "/next"

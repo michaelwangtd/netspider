@@ -21,9 +21,10 @@ if __name__ == '__main__':
     initUrl = 'http://newseed.pedaily.cn/invest/p1'
     during = 'data/newseed_data'
     fileNameNew = 'investEvent_linkIndex_new.txt'
-    fileNameOld = 'investEvent_linkIndex_old.txt'
-    logFileName = 'log_invest_event_link_newseed2.txt'
-
+    fileNameOld = 'test_index_invest_event.txt'
+    # fileNameOld = 'investEvent_linkIndex_old.txt'
+    # logFileName = 'log_invest_event_link_newseed2.txt'
+    logFileName = 'test_log_invest_event.txt'
 
     """
     初次获取事件链接
