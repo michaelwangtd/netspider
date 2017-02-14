@@ -16,23 +16,76 @@ import hashlib
 import index
 
 
+# test = "201702141536"
+# print(time.mktime(time.strptime(test,'%Y%m%d%H%M')))
+# print(type(time.mktime(time.strptime(test,'%Y%m%d%H%M'))))
+# result = int(time.mktime(time.strptime(test,'%Y%m%d%H%M')))
+# print(result)
+# beforeDay = result - (1 * 24 * 60 * 60)
+# print(beforeDay)
+# print(time.strftime('%Y%m%d%H%M',time.localtime(beforeDay)))
 
 
-# 测试读取36kr爬取内容
-filePath = index.ROOT_PATH + '/data/kr_data/' + 'origin_html.txt'
-fr = open(filePath,'r',encoding='utf-8')
-line = fr.readline()
-print(type(line),line)
-dic = json.loads(line)
-print(type(dic),dic)
-print(dic['data']['title'])
-print(dic['data']['published_at'])
-print(dic['data']['currentUrl'])
-print(type(dic['data']['extraction_tags']),dic['data']['extraction_tags'])
-originTag = json.loads(dic['data']['extraction_tags'])
-print(type(originTag),originTag,originTag[0],originTag[1][0])
-print(dic['data']['user']['name'])
-print(type(dic['data']['content']),dic['data']['content'])
+
+
+# test = '12 天44前'
+# result = re.findall('([0-9]+)',test,re.S)
+# print(result)
+
+
+
+# test = '201702141536'
+# print(test[0:4])
+# print(test[4:6])
+# print(test[6:8])
+
+
+
+# test = 'origin_html_pingwest_201701181122'
+# print(test.split('_'))
+# print(test.split('_')[len(test.split('_'))-1])
+
+
+
+# print(time.strftime('%Y%m%d%H%M',time.localtime(time.time())))
+# print(type(time.strftime('%Y%m%d%H%M',time.localtime(time.time()))))
+
+
+
+
+## pingwest爬虫测试
+ptime = 1486993292
+url = 'http://www.pingwest.com/wp-admin/admin-ajax.php'
+data = {'action': 'my_recommand', 'secutity': 'b17e1ad3ea', 'postid': '', 'type': '1'}
+data['postid'] = ptime
+
+r = requests.post(url=url, data=data)
+html = r.content.decode('utf-8')
+# print(type(html),html)
+dicList = json.loads(html)
+print(dicList[0]['contenthtml'])
+inputFilePath = index.ROOT_PATH + '/data/pingwest_data/test.txt'
+fw = open(inputFilePath,'w',encoding='utf-8')
+fw.write(dicList[0]['contenthtml'])
+fw.close()
+
+
+
+# # 测试读取36kr爬取内容
+# filePath = index.ROOT_PATH + '/data/kr_data/' + 'origin_html.txt'
+# fr = open(filePath,'r',encoding='utf-8')
+# line = fr.readline()
+# print(type(line),line)
+# dic = json.loads(line)
+# print(type(dic),dic)
+# print(dic['data']['title'])
+# print(dic['data']['published_at'])
+# print(dic['data']['currentUrl'])
+# print(type(dic['data']['extraction_tags']),dic['data']['extraction_tags'])
+# originTag = json.loads(dic['data']['extraction_tags'])
+# print(type(originTag),originTag,originTag[0],originTag[1][0])
+# print(dic['data']['user']['name'])
+# print(type(dic['data']['content']),dic['data']['content'])
 
 
 
