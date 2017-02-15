@@ -97,7 +97,7 @@ def extractContentFromHtmlString(cake):
         for item in singleContentList:
             temp = item.replace('\s', '').replace('\t', '').replace('\r', '')
             cleanedContentList.append(temp)
-        return cleanedContentList
+        return ''.join(cleanedContentList)
 
 
 

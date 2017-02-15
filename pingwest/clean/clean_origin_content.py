@@ -7,6 +7,8 @@ from util import crawl,handle,constant,io
 import copy
 import re
 from collections import OrderedDict
+from bs4 import BeautifulSoup
+import time
 
 
 def scanTitle(title):
@@ -72,7 +74,7 @@ def getTimeStampFromTxt(originHtmlTxtName):
         正则提取字符串中的时间信息
     '''
     cake = originHtmlTxtName
-    if isinstance(str,cake):
+    if isinstance(cake,str):
         if '.' in cake:
             part1 = cake.split('.')[0]
             if '_' in part1:
@@ -100,13 +102,13 @@ def getTimeFromJson(timeString,timeStamp):
     '''
     if timeString:
         #
-        if '秒前' in timeString or '分前' in timeString or '小时前' in timeStamp:
+        if '秒前' in timeString or '分前' in timeString or '小时前' in timeString:
             return timeStamp[0:4] + '-' + timeStamp[4:6] + '-' + timeStamp[6:8]
-        elif '天前' in timeStamp:
-            if re.findall('([0-9]+)', timeStamp, re.S):
-                dayNum = int(re.findall('([0-9]+)', timeStamp, re.S)[0])
+        elif '天前' in timeString:
+            if re.findall('([0-9]+)', timeString, re.S):
+                dayNum = int(re.findall('([0-9]+)', timeString, re.S)[0])
                 # 获取时间戳毫秒数
-                currentNum = int(time.mktime(time.strptime(timeStamp, '%Y%m%d%H%M')))
+                currentNum = int(time.mktime(time.strptime(timeStamp,'%Y%m%d%H%M')))
                 beforeNum = currentNum - int(dayNum) * 24 * 60 * 60
                 return time.strftime('%Y-%m-%d', time.localtime(beforeNum))
         else:
@@ -117,9 +119,14 @@ def getUrlListFromContentHtml(contentHtml):
     '''
 
     '''
-
-
-
+    urlList = []
+    soup = BeautifulSoup(contentHtml)
+    aTagList = soup.find_all('a')
+    for item in aTagList:
+        if item.string != None:
+            url = item.get('href')
+            urlList.append(url)
+    return urlList
 
 
 
@@ -143,50 +150,31 @@ if __name__ == '__main__':
         if line:
             lineDic = json.loads(line)[0]
             if isValid(lineDic['title']):
-                # 初始化记录字典
-                initDic = getInitDic()
-                # 这里将初始化部分提前
-                initDic['title'] = lineDic['title']
-                initDic['url'] = lineDic['posturl']
-                initDic['author'] = lineDic['name']
-                # 提取时间信息
-                time = getTimeFromJson(lineDic['gtime'],timeStamp)
-                initDic['time'] = time
-                # 提取内容content中的url链接
-                getUrlListFromContentHtml(lineDic['contenthtml'])
-                # 提取内容
-                getContentFromJson(lineDic['contenthtml'])
-                # 提取标签
+                # try:
+                    # 初始化记录字典
+                    initDic = getInitDic()
+                    # 这里将初始化部分提前
+                    initDic['title'] = lineDic['title']
+                    initDic['url'] = lineDic['posturl']
+                    initDic['author'] = lineDic['name']
+                    # 提取时间信息
+                    postTime = getTimeFromJson(lineDic['gtime'],timeStamp)
+                    initDic['time'] = postTime
+                    # 提取内容content中的url链接
+                    urlList = getUrlListFromContentHtml(lineDic['contenthtml'])
+                    initDic['content_url'] = urlList
+                    # 提取内容
+                    content = crawl.extractContentFromHtmlString(lineDic['contenthtml'])
+                    initDic['content'] = content
+                    # 提取标签
+                    # --这里还有标签的提取步骤--
 
-
-                # print(i,type(lineDic),lineDic['title'])
-                # 挑选出不需要处理的记录
-                # if scanTitle(lineDic['title']):
-                #     # 处理文章内容
-                #     content = ''.join(crawl.extractContentFromHtmlString(lineDic['contenthtml']))
-                #     # 构建记录字典
-                #     initDic['content'] = content
-                #     initDic['title'] = lineDic['title']
-                #     jsonRecord = json.dumps(initDic,ensure_ascii=False)
-                #     fw.write(jsonRecord + '\n')
-                # if selectProcessArticle(lineDic['title']):
-                #     # print(i,lineDic['title'])
-                #     titleAndContentList = getTitleAndContentList(lineDic['contenthtml'])
-                #     for item in titleAndContentList:
-                #
-                #         newInitDic = copy.deepcopy(initDic)
-                #         newInitDic['title'] = item[0]
-                #         newInitDic['content'] = item[1]
-                #         jsonRecord = json.dumps(newInitDic,ensure_ascii=False)
-                #         fw.write(jsonRecord + '\n')
-                #         print(i,item[0])
-                #         i += 1
-                # # i += 1
-
-                jsonRecord = json.dumps(initDic, ensure_ascii=False)
-                fw.write(jsonRecord + '\n')
-                print(i,jsonRecord)
-                i += 1
+                    jsonRecord = json.dumps(initDic, ensure_ascii=False)
+                    fw.write(jsonRecord + '\n')
+                    print(i,jsonRecord)
+                    i += 1
+                # except Exception as ex:
+                #     print(ex)
         else:
             break
     fw.close()

@@ -52,19 +52,11 @@ def getRecordPostId(filePath):
     return recordNumList
 
 
-def getNowTimeAndDate():
-    '''
-        获取系统当前日期，时间，精确到分钟:yyyymmddHHMM
-        每次更新数据时用于命名文件名
-    '''
-    return time.strftime('%Y%m%d%H%M',time.localtime(time.time()))
-
-
 if __name__ == '__main__':
     # 每次更新时只需设定ptime为最新
     ptime = 1487008612
 
-    currentTime = getNowTimeAndDate()
+    currentTime = handle.getNowTimeAndDate()
 
     originHtmlOutputFilePath = index.ROOT_PATH + '/data/pingwest_data/' + 'origin_html_pingwest_' + currentTime + '.txt'
     ptimeFlagOutputFilePath = index.ROOT_PATH + '/data/pingwest_data/' + 'ptime_flag_record_pingwest.txt'

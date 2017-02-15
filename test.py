@@ -14,6 +14,86 @@ import chardet
 import json
 import hashlib
 import index
+import jieba
+
+
+
+## 36kr 原始html提取数据
+filePath = index.ROOT_PATH + '/data/kr_data/origin_html_kr_201702151528.txt'
+fr = open(filePath,'r',encoding='utf-8')
+line = fr.readline()
+dic = json.loads(line.strip())
+print(dic['data']['title'])
+print(dic['data']['published_at'])
+print(dic['data']['currentUrl'])
+print(type(dic['data']['extraction_tags']),dic['data']['extraction_tags'])
+print(type(json.loads(dic['data']['extraction_tags'])),dic['data']['extraction_tags'])
+for item in json.loads(dic['data']['extraction_tags']):
+    print(item[0],item[1])
+print(dic['data']['user']['name'])
+
+
+
+# timeStamp = '201702141130'
+# print(time.strptime(timeStamp,'%Y%m%d%H%M'))
+
+
+
+# test = "\u4e1d\u7ef8\u4e4b\u8def\u4e50\u56e2\u5728\u683c\u83b1\u7f8e\u201c\u6885\u5f00\u4e09\u5ea6\u201d\uff0c\u9664\u4e86\u611f\u8c22\u9a6c\u53cb\u53cb\uff0c\u4f60\u8fd8\u5e94\u8be5\u8ba4\u8bc6\u4e00\u4e0b\u5434\u5f64"
+# print(test)
+# print(test.encode('unicode_escape').decode('unicode_escape'))
+
+# test = """加啊四系啊劳动法<a href="www.baidu.com"><img src="www.xxxx.xxx"></a>系啊觉得是客服<a href="www.ifanr.com">及阿娇事发</a>系啊李开复打扫房间就"""
+# soup = BeautifulSoup(test)
+# aTagList = soup.find_all('a')
+# for item in aTagList:
+#     print(type(item),item,item.string)
+#     if item.string != None:
+#         print(item.get('href'))
+
+
+
+
+
+
+
+# # Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+#
+# # 使用python表示链表
+# other2 = ListNode('8')
+# three = ListNode('3')
+# three.next = other2
+# other = ListNode('8')
+# other.next = three
+# two = ListNode('2')
+# two.next = other
+# head = ListNode('1')
+# head.next = two
+#
+#
+# currentNode = head
+# print(currentNode.val)
+# while(currentNode.next != None):
+#     currentNode = currentNode.next
+#     print(currentNode.val)
+
+
+#
+# class Solution(object):
+#     def removeElements(self, head, val):
+#         """
+#         :type head: ListNode
+#         :type val: int
+#         :rtype: ListNode
+#         """
+#         currentNode = head
+#         headLink = None
+#         while(currentNode.next != None):
+#             if currentNode.val == val:
 
 
 # test = "201702141536"
@@ -26,6 +106,8 @@ import index
 # print(time.strftime('%Y%m%d%H%M',time.localtime(beforeDay)))
 
 
+# timeStamp = '201702141130'
+# print(time.mktime(time.strptime(timeStamp,'%Y%m%d%H%M')))
 
 
 # test = '12 天44前'
@@ -53,21 +135,21 @@ import index
 
 
 
-## pingwest爬虫测试
-ptime = 1486993292
-url = 'http://www.pingwest.com/wp-admin/admin-ajax.php'
-data = {'action': 'my_recommand', 'secutity': 'b17e1ad3ea', 'postid': '', 'type': '1'}
-data['postid'] = ptime
-
-r = requests.post(url=url, data=data)
-html = r.content.decode('utf-8')
-# print(type(html),html)
-dicList = json.loads(html)
-print(dicList[0]['contenthtml'])
-inputFilePath = index.ROOT_PATH + '/data/pingwest_data/test.txt'
-fw = open(inputFilePath,'w',encoding='utf-8')
-fw.write(dicList[0]['contenthtml'])
-fw.close()
+# ## pingwest爬虫测试
+# ptime = 1486993292
+# url = 'http://www.pingwest.com/wp-admin/admin-ajax.php'
+# data = {'action': 'my_recommand', 'secutity': 'b17e1ad3ea', 'postid': '', 'type': '1'}
+# data['postid'] = ptime
+#
+# r = requests.post(url=url, data=data)
+# html = r.content.decode('utf-8')
+# # print(type(html),html)
+# dicList = json.loads(html)
+# print(dicList[0]['contenthtml'])
+# inputFilePath = index.ROOT_PATH + '/data/pingwest_data/test.txt'
+# fw = open(inputFilePath,'w',encoding='utf-8')
+# fw.write(dicList[0]['contenthtml'])
+# fw.close()
 
 
 

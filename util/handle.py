@@ -5,12 +5,20 @@ import math
 import os
 from bs4 import BeautifulSoup
 from util import io
-
+import time
 
 
 """
     工具类
 """
+
+def getNowTimeAndDate():
+    '''
+        获取系统当前日期，时间，精确到分钟:yyyymmddHHMM
+        每次更新数据时用于命名文件名
+    '''
+    return time.strftime('%Y%m%d%H%M',time.localtime(time.time()))
+
 
 def mergeExcelFromFixedDirNewseed(fileNameList,newOutputFilePath):
     '''
