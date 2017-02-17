@@ -17,20 +17,53 @@ import index
 import jieba
 
 
+class Node(object):
+    def __init__(self,val):
+        self.val = val
+        self.nextLink = None
 
-## 36kr 原始html提取数据
-filePath = index.ROOT_PATH + '/data/kr_data/origin_html_kr_201702151528.txt'
-fr = open(filePath,'r',encoding='utf-8')
-line = fr.readline()
-dic = json.loads(line.strip())
-print(dic['data']['title'])
-print(dic['data']['published_at'])
-print(dic['data']['currentUrl'])
-print(type(dic['data']['extraction_tags']),dic['data']['extraction_tags'])
-print(type(json.loads(dic['data']['extraction_tags'])),dic['data']['extraction_tags'])
-for item in json.loads(dic['data']['extraction_tags']):
-    print(item[0],item[1])
-print(dic['data']['user']['name'])
+node = Node(4)
+print(node.val)
+
+
+
+
+
+
+# a = lambda x,y:x+y
+# print(a(3,4))
+# sorted(swList, key= lambda a_entry : a_entry[1], reverse= True)
+
+# testList = [['a',4],['c',1],['b',2]]
+# print(sorted(testList,key= lambda item:item[1]))
+# print(sorted(testList,key= lambda item:item[1],reverse=True))
+# print(sorted(testList,key= lambda item:item[0]))
+
+
+
+
+# time.strftime('%Y%m%d%H%M',time.localtime(time.time()))
+# print(time.time())
+# print(time.localtime(time.time()))
+# print(time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time())))
+#
+# ftime = '2017-02-17 11:09:51'
+# print(time.mktime(time.strptime(ftime,'%Y-%m-%d %H:%M:%S')))
+# print(time.mktime(time.strptime(ftime,'%Y-%m-%d %H:%M:%S')))
+
+# ## 36kr 原始html提取数据
+# filePath = index.ROOT_PATH + '/data/kr_data/origin_html_kr_201702151528.txt'
+# fr = open(filePath,'r',encoding='utf-8')
+# line = fr.readline()
+# dic = json.loads(line.strip())
+# print(dic['data']['title'])
+# print(dic['data']['published_at'])
+# print(dic['data']['currentUrl'])
+# print(type(dic['data']['extraction_tags']),dic['data']['extraction_tags'])
+# print(type(json.loads(dic['data']['extraction_tags'])),dic['data']['extraction_tags'])
+# for item in json.loads(dic['data']['extraction_tags']):
+#     print(item[0],item[1])
+# print(dic['data']['user']['name'])
 
 
 

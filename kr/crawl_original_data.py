@@ -24,17 +24,17 @@ def getRecordPageNum(filePath):
 
 if __name__ == '__main__':
     # 初始请求号
-    startNum = 5813
+    startNum = 5064073
 
     # 获取当前时间
-    # currentTime = handle.getNowTimeAndDate()
+    currentTime = handle.getNowTimeAndDate()
 
     # 请求常量参数
     header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36'}
     # 文件输出路径
     pageNumFilePath = index.ROOT_PATH + '/data/kr_data' + '/flag_page_num_record.txt'
-    # originHtmlFilePath = index.ROOT_PATH + '/data/kr_data' + '/origin_html_kr_' + currentTime + '.txt'
-    originHtmlFilePath = index.ROOT_PATH + '/data/kr_data' + '/origin_html_kr_' + '201702161015' + '.txt'
+    originHtmlFilePath = index.ROOT_PATH + '/data/kr_data' + '/origin_html_kr_' + currentTime + '.txt'
+    # originHtmlFilePath = index.ROOT_PATH + '/data/kr_data' + '/origin_html_kr_' + '201702161015' + '.txt'
     # 获取start_num_record.txt中的历史纪录序号
     recordNumList = getRecordPageNum(pageNumFilePath)
 
