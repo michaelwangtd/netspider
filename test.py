@@ -17,13 +17,133 @@ import index
 import jieba
 
 
-class Node(object):
-    def __init__(self,val):
-        self.val = val
-        self.nextLink = None
 
-node = Node(4)
-print(node.val)
+# for i in range(5,-1,-1):
+#     print(i)
+
+
+# insert order
+cakeList = ['5','4','9','1']
+def getOrderedList(cakeList):
+    for i in range(1,len(cakeList)):
+        for j in range(i-1,-1,-1):
+            
+
+
+
+getOrderedList(cakeList)
+
+
+
+
+
+
+
+
+
+
+# header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36'}
+# url = "https://www.huxiu.com/v2_action/article_list"
+# # 获取内容
+# r = requests.get(url=url, headers=header)
+# html = r.content.decode('utf-8')
+# dic = json.loads(html)
+
+
+# print('现在时间：',time.time())
+# timeStamp = 1333426680  #2012-04-03 12:18:00
+# print(time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(timeStamp)))
+
+
+
+# 虎嗅文章列表地址url
+# header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36'}
+# url = 'https://www.huxiu.com/v2_action/article_list'
+# data = {'huxiu_hash_code':'71c4da50b168c64a0d319bea4e368c8c','page': ''}
+# data['page'] = 1111
+#
+# r = requests.post(url=url, data=data,headers=header)
+# html = r.content.decode('utf-8')
+# print(html)
+# dicList = json.loads(html)
+# print(dicList)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# totalpage 1112
+# num 181836
+# print(181836-(1112*30)) # 148476
+# 148476
+# 148470
+# 148463
+# 148450
+# 148435
+# 148400
+# 148350
+# 148300
+# 148200
+# 148000
+# 147476
+
+
+
+
+
+
+# filePath = index.ROOT_PATH + '/data/kr_data/origin_html_kr_201702171539.txt'
+# fr = open(filePath,'r',encoding='utf-8')
+# line = fr.readline()
+# dic = json.loads(line.replace('\ufeff',''))
+# cake = dic['data']['extraction_tags']
+# breadList = json.loads(cake)
+# print(breadList,type(breadList))
+# for item in breadList:
+#     print(item[0])
+
+
+
+
+
+
+
+
+
+# timeStamp = '2016-08-04 21:22:49'
+# print(timeStamp.split(' ')[0])
+
+
+
+
+# startNum = 5064073
+# header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36'}
+# url = "http://36kr.com/api/post/" + str(startNum) + "/next"
+# # 获取内容
+# r = requests.get(url=url, headers=header)
+# html = r.content.decode('utf-8')
+# print(html)
+
+
+
+
+
+# class Node(object):
+#     def __init__(self,val):
+#         self.val = val
+#         self.nextLink = None
+#
+# node = Node(4)
+# print(node.val)
 
 
 

@@ -5,6 +5,7 @@ import json
 import index
 from collections import OrderedDict
 from util import handle,crawl,io,constant
+from bs4 import BeautifulSoup
 """
     36kr原始网页数据清理代码
 """
@@ -36,6 +37,38 @@ def getInitDic():
     return initDic
 
 
+def getPostTime(timeStamp):
+    if isinstance(timeStamp,str):
+        return timeStamp.split(' ')[0]
+
+
+def getUrlListFromContentHtml(contentHtml):
+    '''
+
+    '''
+    urlList = []
+    soup = BeautifulSoup(contentHtml)
+    aTagList = soup.find_all('a')
+    for item in aTagList:
+        if item.string != None:
+            url = item.get('href')
+            urlList.append(url)
+    return urlList
+
+
+def getOriginTag(cake):
+    '''
+        从字符串中提取出原始标签，以字符串方式再返回
+    '''
+    resultList = []
+    if isinstance(cake,str):
+        breadList = json.loads(cake)
+        if breadList:
+            for item in breadList:
+                resultList.append(item[0])
+    return ' '.join(resultList)
+
+
 if __name__ == '__main__':
     # 指定待处理文件的文件名
     originHtmlTxtName = 'origin_html_kr_201702171539.txt'
@@ -54,29 +87,39 @@ if __name__ == '__main__':
     while True:
         line = fr.readline().strip().replace('\ufeff','')
         if line:
-            lineDic = json.loads(line)
-            # 初始化记录字典
-            initDic = getInitDic()
-            # 这里将初始化部分提前
-            initDic['title'] = lineDic['title']
-            initDic['url'] = lineDic['posturl']
-            initDic['author'] = lineDic['name']
-            # 提取时间信息
-            postTime = getTimeFromJson(lineDic['gtime'],timeStamp)
-            initDic['time'] = postTime
-            # 提取内容content中的url链接
-            urlList = getUrlListFromContentHtml(lineDic['contenthtml'])
-            initDic['content_url'] = urlList
-            # 提取内容
-            content = crawl.extractContentFromHtmlString(lineDic['contenthtml'])
-            initDic['content'] = content
-            # 提取标签
-            # --这里还有标签的提取步骤--
+            try:
+                lineDic = json.loads(line)
+                # 初始化记录字典
+                initDic = getInitDic()
+                # 这里将初始化部分提前
+                initDic['title'] = lineDic['data']['title']
+                print(lineDic['data']['title'])
+                initDic['url'] = lineDic['data']['currentUrl']
+                if lineDic['data']['user']:
+                    initDic['author'] = lineDic['data']['user']['name']
+                else:
+                    initDic['author'] = ''
+                # 提取时间信息
+                postTime = getPostTime(lineDic['data']['published_at'])
+                initDic['time'] = postTime
+                # 提取内容content中的url链接
+                urlList = getUrlListFromContentHtml(lineDic['data']['content'])
+                initDic['content_url'] = urlList
+                # 提取内容
+                content = crawl.extractContentFromHtmlString(lineDic['data']['content'])
+                initDic['content'] = content
+                # 提取原始标签
+                originTags = getOriginTag(lineDic['data']['extraction_tags'])
+                initDic['originTag'] = originTags
+                # 提取标签
+                # --这里还有标签的提取步骤--
 
-            jsonRecord = json.dumps(initDic, ensure_ascii=False)
-            fw.write(jsonRecord + '\n')
-            print(i,jsonRecord)
-            i += 1
+                jsonRecord = json.dumps(initDic, ensure_ascii=False)
+                fw.write(jsonRecord + '\n')
+                print(i,jsonRecord)
+                i += 1
+            except Exception as ex:
+                print('这条记录数据有问题...')
         else:
             break
     fw.close()
