@@ -18,26 +18,89 @@ import jieba
 
 
 
+
+
+
+
+# 4,5,8,10,11,16,20,32
+
+
+
+
+
+
+
+
+
+
+# test = """<div class="\"mod-b" mod-art\" data-aid="\"181424\"">
+# 	\n\n
+# 	<div class="\"mod-angle\"">
+# 		热
+# 	</div>
+# 	\n
+# 	<div class="\"mod-thumb\"">
+# 		\n        <a class="\"transition\"" href="\"/article/181424.html\"" target="\"_blank\"" title="\"当人工智能都能下棋时，你还能做什么？我与一位创业中的博士聊了聊\"">\n            <img class="\"lazy\"" data-original="\"https://imgs.bipush.com/article/cover/201612/13/162813375721.jpg?imageView2/1/w/220/h/165/|imageMogr2/strip/interlace/1/quality/85/format/jpg\"" alt="\"当人工智能都能下棋时，你还能做什么？我与一位创业中的博士聊了聊\"">\n        </a>\n
+# 	</div>
+# 	\n                    <a href="\"/whatsnew.html\"" class="\"column-link\"" target="\"_blank\"">24小时</a>\n
+# 	<div class="\"mob-ctt\"">
+# 		\n
+# 		<h2><a href="\"/article/181424.html\"" class="\"transition" msubstr-row2\" target="\"_blank\"">当人工智能都能下棋时，你还能做什么？我与一位创业中的博士聊了聊</a></h2>
+# 		\n
+# 		<div class="\"mob-author\"">
+# 			\n
+# 			<div class="\"author-face\"">
+# 				\n                <a href="\"/member/1341581.html\"" target="\"_blank\""><img src="\"https://imgs.bipush.com/auth/data/avatar/001/34/15/81_avatar_big.jpg!40x40?|imageMogr2/strip/interlace/1/quality/85/format/jpg\""></a>\n
+# 			</div>
+# 			\n            <a href="\"/member/1341581.html\"" target="\"_blank\"">\n                <span class="\"author-name\"">天使不投资人</span>\n            </a>\n            <a href="\"/vip\"" target="\"_blank\""><i class="\"i-vip" icon-vip\"></i></a>\n            <i class="\"i-icon" icon-auth2\" title="\"虎嗅认证作者\""></i><span class="\"time\"">1天前</span>\n            <i class="\"icon" icon-cmt\"></i><em>18</em>\n            <i class="\"icon" icon-fvr\"></i><em>81</em>\n
+# 		</div>
+# 		\n        <!--外部文章/内部文章两者取其一-->\n
+# 		<div class="\"mob-sub\"">
+# 			世界对人工智能变得愈发宽容
+# 		</div>
+# 		\n
+# 	</div>
+# 	\n
+# </div>
+# \n
+# <div class="\"mod-b" mod-art\" data-aid="\"181735\"">
+# 	\n\n
+# 	<div class="\"mod-angle\"">
+# 		热
+# 	</div>
+# 	\n
+# 	<div class="\"mod-thumb\"">
+# 		\n        <a class="\"transition\"" href="\"/article/181735.html\"" target="\"_blank\"" title="\"微信付费阅读内测图流出，原来如此…\"">\n            <img class="\"lazy\"" data-original="\"https://imgs.bipush.com/article/cover/201702/18/234325556970.jpg?imageView2/1/w/220/h/165/|imageMogr2/strip/interlace/1/quality/85/format/jpg\"" alt="\"微信付费阅读内测图流出，原来如此…\"">\n        </a>\n
+# 	</div>
+# 	\n                    <a href="\"/whatsnew.html\"" class="\"column-link\"" target="\"_blank\"">24小时</a>\n
+# 	<div class="\"mob-ctt\"">
+# 		\n
+# 		<h2><a href="\"/article/181735.html\"" class="\"transition" msubstr-row2\" target="\"_blank\"">微信付费阅读内测图流出，原来如此…</a></h2>
+# 		\n
+# 		<div class="\"mob-author\"">
+# 			\n
+# 			<div class="\"author-face\"">
+# 				\n                <a href="\"/member/1538253.html\"" target="\"_blank\""><img src="\"https://imgs.bipush.com/auth/data/avatar/001/53/82/53_1478687916.jpg!40x40?|imageMogr2/strip/interlace/1/quality/85/format/jpg\""></a>\n
+# 			</div>
+# 			\n            <a href="\"/member/1538253.html\"" target="\"_blank\"">\n                <span class="\"author-name\"">这不科学啊</span>\n            </a>\n            <a href="\"/vip\"" target="\"_blank\""></a>\n                                    <span class="\"time\"">1天前</span>\n            <i class="\"icon" icon-cmt\"></i><em>7</em>\n            <i class="\"icon" icon-fvr\"></i><em>20</em>\n
+# 		</div>
+# 		\n        <!--外部文章/内部文章两者取其一-->\n
+# 		<div class="\"mob-sub\"">
+# 			在舆论热点的推动下，总会有人把去“挖坟”。
+# 		</div>
+# 		\n
+# 	</div>
+# 	\n
+# </div>"""
+
+# soup = BeautifulSoup(test)
+# print(soup)
+# resultList = soup.find_all('div',class_ = "mod-b mod-art")
+# print(resultList)
+
+
 # for i in range(5,-1,-1):
 #     print(i)
-
-
-# insert order
-cakeList = ['5','4','9','1']
-def getOrderedList(cakeList):
-    for i in range(1,len(cakeList)):
-        for j in range(i-1,-1,-1):
-            
-
-
-
-getOrderedList(cakeList)
-
-
-
-
-
-
 
 
 
