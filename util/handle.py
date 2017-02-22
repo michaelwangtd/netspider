@@ -6,11 +6,134 @@ import os
 from bs4 import BeautifulSoup
 from util import io
 import time
+import redis
+import jieba.analyse
 
 
 """
     工具类
 """
+def getListFromRedis(keyName,r):
+    '''
+        从redis获取列表
+    '''
+    resultList = []
+    for item in r.lrange(keyName,0,r.llen(keyName)):
+        resultList.append(item.decode('utf-8'))
+    return resultList
+
+
+def getTagbaseDicFromRedis(initDic,tagbaseNameList):
+    '''
+        从redis获取标签库字典
+        需要提供redis库key值列表：redisKeyList
+        不需要提供redis配置信息，配置信息直接从config配置文件读取
+    '''
+    if isinstance(tagbaseNameList,list):
+        if tagbaseNameList:
+            #initDic = {}
+            r = redis.Redis(host='139.129.226.200',port=6379,password='redis_zhizhugraph*ts',db=1)
+            # 遍历tagbaseNameList
+            for tagbaseName in tagbaseNameList:
+                # 获取tagbase列表
+                tagbaseList = getListFromRedis(tagbaseName,r)
+                if tagbaseName not in initDic.keys():
+                    initDic[tagbaseName] = tagbaseList
+            return initDic
+
+
+def dic2list(dic):
+    '''
+        目前dic字典的value值要求是list
+        后续可以继续添加由dic转换到list时dic中value的类型
+    '''
+    resultList = []
+    if isinstance(dic,dict):
+        for key,value in dic.items():
+            if isinstance(value,list):
+                resultList.extend(value)
+    # resultList = list(set(resultList))
+    return resultList
+
+
+def splitEquivalentTag(tagList):
+    '''
+        分解同义标签
+        列表中的元素如果是同义标签（'xxx||xxx||xxx'），进行分割
+        input:list  output:list
+    '''
+    resultList = []
+    for item in tagList:
+        if '||' in item:
+            resultList.extend(item.split('||'))
+        else:
+            resultList.append(item)
+    return resultList
+
+
+def double2one(doubleList):
+    '''
+        列表去重
+    '''
+    return list(set(doubleList))
+
+
+def persistentTagbase(tagbase,filePath):
+    '''
+        为什么是persistent tagbase，因为持久化的文件生成的格式是特定的
+        tagbase可以是字典也可以是列表，如果是字典就转化成列表
+        将tagbase的列表以“覆盖”写的方式写入filePath文件
+    '''
+    tagbaseList = []
+    # 准备数据格式
+    if isinstance(tagbase,dict):
+        tagbaseList = dic2list(tagbase)
+    if isinstance(tagbase,list):
+        tagbaseList = tagbase
+    # 分解标签列表中的同义标签
+    tagbaseList = splitEquivalentTag(tagbaseList)
+    # 去重
+    tagbaseList = double2one(tagbaseList)
+    # 数据持久化准备
+    fw = open(filePath,'w',encoding='utf-8')
+    for tag in tagbaseList:
+        fw.write(tag + '\n')
+    fw.close()
+
+
+def extractTheme(tagList,tagbaseFilePath):
+    themeList = []
+    tagbaseList = io.readListFromTxt(tagbaseFilePath)
+    for item in tagList:
+            if item in tagbaseList:
+                themeList.append(item)
+    return themeList
+
+
+def extractTagsFromContent(content):
+    '''
+        从内容中提取标签的入口函数
+    '''
+    # redis标签库key值
+    tagbaseNameList = ['industry_tags', 'research_inst_tags', 'invs_cmy_tags', 'university_tags', 'product_cmy_tags',
+                       'meeting_tags', 'person_tags', 'product_tags']
+    tagbaseDic = {}
+    # 标签库路径
+    tagbaseFilePath = io.getLibFilePath('topic_tagbase.txt')
+    # 从redis读取的标签
+    if not os.path.exists(tagbaseFilePath):
+        tagbaseDic = getTagbaseDicFromRedis(tagbaseDic, tagbaseNameList)
+        persistentTagbase(tagbaseDic, tagbaseFilePath)
+    # 加载jieba
+    jieba.load_userdict(tagbaseFilePath)
+
+    cutOne = content.replace('&nbsp;', '')
+    # 提取关键词
+    tagList = jieba.analyse.extract_tags(cutOne)
+    themeList = extractTheme(tagList, tagbaseFilePath)
+
+    return ' '.join(themeList)
+
 
 def getNowTimeAndDate():
     '''

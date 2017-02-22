@@ -148,6 +148,7 @@ if __name__ == '__main__':
     while True:
         line = fr.readline().strip()
         if line:
+            print(i)
             lineDic = json.loads(line)[0]
             if isValid(lineDic['title']):
                 # try:
@@ -166,15 +167,18 @@ if __name__ == '__main__':
                     # 提取内容
                     content = crawl.extractContentFromHtmlString(lineDic['contenthtml'])
                     initDic['content'] = content
-                    # 提取标签
-                    # --这里还有标签的提取步骤--
+                    # -提取标签-
+                    tags = handle.extractTagsFromContent(content)
+                    initDic['tag'] = tags
 
                     jsonRecord = json.dumps(initDic, ensure_ascii=False)
                     fw.write(jsonRecord + '\n')
-                    print(i,jsonRecord)
-                    i += 1
+                    # print(i,jsonRecord)
+                    # print(i)
+                    # i += 1
                 # except Exception as ex:
                 #     print(ex)
+            i += 1
         else:
             break
     fw.close()

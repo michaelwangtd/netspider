@@ -3,6 +3,32 @@ import os
 from xlutils import copy
 import xlrd
 import xlwt
+import index
+
+
+def readListFromTxt(filePath):
+    '''
+        读取文本信息形成列表
+        只是将整行内容存储到列表中
+    '''
+    infoList = []
+    if os.path.exists(filePath):
+        f = open(filePath,'r',encoding='utf-8')
+        while True:
+            line = f.readline()
+            if line:
+                temp = line.strip()
+                infoList.append(temp)
+            else:
+                break
+        f.close()
+    return infoList
+
+
+def getLibFilePath(fileName):
+    if fileName:
+        return os.path.join(index.ROOT_PATH,'lib',fileName)
+
 
 def getListFromTxt(filePath):
     if os.path.exists(filePath):

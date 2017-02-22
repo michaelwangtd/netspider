@@ -87,13 +87,13 @@ if __name__ == '__main__':
     while True:
         line = fr.readline().strip().replace('\ufeff','')
         if line:
+            print(i)
             try:
                 lineDic = json.loads(line)
                 # 初始化记录字典
                 initDic = getInitDic()
                 # 这里将初始化部分提前
                 initDic['title'] = lineDic['data']['title']
-                print(lineDic['data']['title'])
                 initDic['url'] = lineDic['data']['currentUrl']
                 if lineDic['data']['user']:
                     initDic['author'] = lineDic['data']['user']['name']
@@ -112,14 +112,16 @@ if __name__ == '__main__':
                 originTags = getOriginTag(lineDic['data']['extraction_tags'])
                 initDic['originTag'] = originTags
                 # 提取标签
-                # --这里还有标签的提取步骤--
+                tags = handle.extractTagsFromContent(content)
+                initDic['tag'] = tags
 
                 jsonRecord = json.dumps(initDic, ensure_ascii=False)
                 fw.write(jsonRecord + '\n')
-                print(i,jsonRecord)
-                i += 1
+                # print(i,jsonRecord)
+                # i += 1
             except Exception as ex:
                 print('这条记录数据有问题...')
+            i +=1
         else:
             break
     fw.close()
