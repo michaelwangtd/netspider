@@ -15,7 +15,7 @@ import json
 import hashlib
 import index
 import jieba
-
+from huxiu import crawl_original_data
 
 
 
@@ -27,8 +27,10 @@ import jieba
 
 
 
+print(7148-100-50-30)
 
-
+# url = 'https://www.huxiu.com/article/19.html'
+# print(crawl_original_data.getInfoFromHtml(url))
 
 
 

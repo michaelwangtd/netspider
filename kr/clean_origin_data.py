@@ -71,7 +71,7 @@ def getOriginTag(cake):
 
 if __name__ == '__main__':
     # 指定待处理文件的文件名
-    originHtmlTxtName = 'origin_html_kr_201702171539.txt'
+    originHtmlTxtName = 'origin_html_kr_201702231116.txt'
 
 
     # 获取文件名中的时间信息

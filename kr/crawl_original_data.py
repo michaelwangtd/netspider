@@ -24,7 +24,7 @@ def getRecordPageNum(filePath):
 
 if __name__ == '__main__':
     # 初始请求号
-    startNum = 5064073
+    startNum = 5064715
 
     # 获取当前时间
     currentTime = handle.getNowTimeAndDate()
