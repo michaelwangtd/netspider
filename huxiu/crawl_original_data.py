@@ -93,7 +93,7 @@ def recordIndexNum2Txt(indexNum,filePath):
 
 if __name__ == '__main__':
     # 设定初始序号
-    indexNum = 6968
+    indexNum = 46248    #41448  46048
 
     # 获取当前时间
     currentTime = handle.getNowTimeAndDate()
@@ -114,7 +114,7 @@ if __name__ == '__main__':
     resultDataList = []
 
     # 设置控制变量
-    datasItemNum = 100
+    datasItemNum = 200
     cycleNum = 0
     flagNum = 0
     indexNumRecord = 0
