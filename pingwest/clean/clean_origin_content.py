@@ -3,8 +3,7 @@
 
 import index
 import json
-from util import crawl,handle,constant,io
-import copy
+from util import crawl,handle
 import re
 from collections import OrderedDict
 from bs4 import BeautifulSoup

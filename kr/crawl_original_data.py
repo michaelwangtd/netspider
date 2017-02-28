@@ -5,8 +5,7 @@ import requests
 import json
 import index
 import os
-from util import io
-from util import crawl,handle,io,constant
+from util import handle,io
 
 """
     1 爬取网页原始数据

@@ -1,11 +1,10 @@
 #!/usr/bin python
 # -*- coding:utf-8 -*-
 
-from util import handle
 import index
 import socket
 import os
-from util import io,handle,crawl,constant
+from util import handle,crawl
 import requests
 from bs4 import BeautifulSoup
 

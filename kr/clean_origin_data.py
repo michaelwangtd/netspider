@@ -4,7 +4,7 @@
 import json
 import index
 from collections import OrderedDict
-from util import handle,crawl,io,constant
+from util import handle,crawl
 from bs4 import BeautifulSoup
 """
     36kr原始网页数据清理代码
